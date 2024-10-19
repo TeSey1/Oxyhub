@@ -13,14 +13,10 @@ function rolls()
 end
 
 function autoupgrades()
-  local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
-  
-  if upgradeObject then
-      for _, child in pairs(upgradeObject:GetChildren()) do
-        print(child.Name)
-      end
-  else
-      print("Объект не найден!")
+  local upgradesFolder = workspace.__THINGS.Upgrades
+
+  for _, upgrade in pairs(upgradesFolder:GetChildren()) do
+    print(upgrade.Name) -- Выводим имя каждого объекта
   end
 
 local Tab = Window:MakeTab({
