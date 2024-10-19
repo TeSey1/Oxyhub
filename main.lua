@@ -20,6 +20,7 @@ end
 
 function autoupgrades()
     while _G.autoupgrades == true do
+	wait(0.5)
         -- Функция для "прокачки" объекта
         local function upgradeObject(objectName)
             print("Прокачано" .. objectName)
@@ -45,7 +46,6 @@ function autoupgrades()
         -- Пример использования: передаем папку для обработки
         local rootFolder = game:GetService("ReplicatedStorage").__DIRECTORY.Upgrades.Root  -- Замените на вашу папку
         processFolder(rootFolder)
-	wait(10)
     end
 end
 
