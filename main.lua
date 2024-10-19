@@ -13,14 +13,15 @@ function rolls()
 end
 
 function autoupgrades()
-  local args = {
-    "Coin Crates",
-    "Break Even Faster",
-    "Breakable Overload"
-  }
   while _G.autoupgrades == true do
-    for _, arg in ipairs(args) do
-      game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Upgrades_Purchase"):InvokeServer(arg)
+    local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
+    
+    if upgradeObject then
+        for _, child in pairs(upgradeObject:GetChildren()) do
+            print(child.Name) -- Выводим имя каждого дочернего объекта
+        end
+    else
+        print("Объект не найден!")
     end
   end
 end
