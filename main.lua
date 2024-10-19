@@ -14,7 +14,7 @@ end
 
 function autoupgrades()
   while _G.autoupgrades == true do
-    local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
+    local upgradeObject = workspace.__THINGS.Upgrades
     
     if upgradeObject then
         for _, child in pairs(upgradeObject:GetChildren()) do
