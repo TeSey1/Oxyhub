@@ -12,16 +12,16 @@ function rolls()
   end
 end
 
-function autoupgrades()
-  local upgradeObject = workspace.__THINGS.Upgrades
+-- function autoupgrades()
+--   local upgradeObject = workspace.__THINGS.Upgrades
   
-  if upgradeObject then
-      for _, child in pairs(upgradeObject:GetChildren()) do
-          print(child.Name) -- Выводим имя каждого дочернего объекта
-      end
-  else
-      print("Объект не найден!")
-  end
+--   if upgradeObject then
+--       for _, child in pairs(upgradeObject:GetChildren()) do
+--           print(child.Name) -- Выводим имя каждого дочернего объекта
+--       end
+--   else
+--       print("Объект не найден!")
+--   end
 
 local Tab = Window:MakeTab({
   Name = "Home",
@@ -73,11 +73,11 @@ Tab3:AddToggle({
   end    
 })
 
-Tab5:AddToggle({
-  Name = "Auto Upgrades",
-  Default = false,
-  Callback = function(Value)
-    _G.autoupgrades = Value
-    autoupgrades()
-  end    
-})
+-- Tab5:AddToggle({
+--   Name = "Auto Upgrades",
+--   Default = false,
+--   Callback = function(Value)
+--     _G.autoupgrades = Value
+--     autoupgrades()
+--   end    
+-- })
