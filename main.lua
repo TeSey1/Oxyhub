@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/OxyHub-Team/ui-library/refs/heads/main/orion.lua')))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/OxyHub-Team/ui-library/refs/heads/main/orion.lua'))()
 getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/kocmoc/main/api.lua"))()
 local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremium = false, SaveConfig = true, ConfigFolder = "OxyHub", IntroIcon = "rbxassetid://137607810655683", IntroText = "OxyHub", Icon = "rbxassetid://137607810655683"})
 
@@ -13,12 +13,15 @@ function rolls()
 end
 
 function autoupgrades()
-  local upgradesFolder = workspace.__THINGS.Upgrades
-
-  for _, upgrade in pairs(upgradesFolder:GetChildren()) do
-    print(upgrade.Name) -- Выводим имя каждого объекта
+  local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
+  
+  if upgradeObject then
+      for _, child in pairs(upgradeObject:GetChildren()) do
+          print(child.Name) -- Выводим имя каждого дочернего объекта
+      end
+  else
+      print("Объект не найден!")
   end
-end
 
 local Tab = Window:MakeTab({
   Name = "Home",
