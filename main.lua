@@ -12,16 +12,16 @@ function rolls()
   end
 end
 
--- function autoupgrades()
---   local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
+function autoupgrades()
+  local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
   
-  -- if upgradeObject then
-  --     for _, child in pairs(upgradeObject:GetChildren()) do
-  --       game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Upgrades_Purchase"):InvokeServer(child.Name)  -- Выводим имя каждого дочернего объекта
-  --     end
-  -- else
-  --     print("Объект не найден!")
-  -- end
+  if upgradeObject then
+      for _, child in pairs(upgradeObject:GetChildren()) do
+        print(child.Name)
+      end
+  else
+      print("Объект не найден!")
+  end
 
 local Tab = Window:MakeTab({
   Name = "Home",
@@ -78,6 +78,6 @@ Tab5:AddToggle({
   Default = false,
   Callback = function(Value)
     _G.autoupgrades = Value
-    --autoupgrades()
+    autoupgrades()
   end    
 })
