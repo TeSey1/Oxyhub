@@ -45,6 +45,7 @@ function autoupgrades()
         -- Пример использования: передаем папку для обработки
         local rootFolder = game:GetService("ReplicatedStorage").__DIRECTORY.Upgrades.Root  -- Замените на вашу папку
         processFolder(rootFolder)
+	wait(10)
     end
 end
 
