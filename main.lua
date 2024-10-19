@@ -17,7 +17,7 @@ function autoupgrades()
   
   if upgradeObject then
       for _, child in pairs(upgradeObject:GetChildren()) do
-          print(child.Name) -- Выводим имя каждого дочернего объекта
+        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Upgrades_Purchase"):InvokeServer(child.Name)  -- Выводим имя каждого дочернего объекта
       end
   else
       print("Объект не найден!")
