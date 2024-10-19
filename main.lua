@@ -18,6 +18,7 @@ function autoupgrades()
   for _, upgrade in pairs(upgradesFolder:GetChildren()) do
     print(upgrade.Name) -- Выводим имя каждого объекта
   end
+end
 
 local Tab = Window:MakeTab({
   Name = "Home",
