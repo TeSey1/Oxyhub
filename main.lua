@@ -78,6 +78,6 @@ Tab5:AddToggle({
   Default = false,
   Callback = function(Value)
     _G.autoupgrades = Value
-    autoupgrades()
+    --autoupgrades()
   end    
 })
