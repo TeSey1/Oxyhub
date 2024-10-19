@@ -1,4 +1,4 @@
-local OrionLib = loadstring(game:HttpGet("https://raw.githubusercontent.com/OxyHub-Team/ui-library/refs/heads/main/orion.lua"))()
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/OxyHub-Team/ui-library/refs/heads/main/orion.lua')))()
 getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/kocmoc/main/api.lua"))()
 local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremium = false, SaveConfig = true, ConfigFolder = "OxyHub", IntroIcon = "rbxassetid://137607810655683", IntroText = "OxyHub", Icon = "rbxassetid://137607810655683"})
 
@@ -12,16 +12,18 @@ function rolls()
   end
 end
 
--- function autoupgrades()
---   local upgradeObject = workspace.__THINGS.Upgrades
-  
---   if upgradeObject then
---       for _, child in pairs(upgradeObject:GetChildren()) do
---           print(child.Name) -- Выводим имя каждого дочернего объекта
---       end
---   else
---       print("Объект не найден!")
---   end
+function autoupgrades()
+  local args = {
+    "Coin Crates",
+    "Break Even Faster",
+    "Breakable Overload"
+  }
+  while _G.autoupgrades == true do
+    for _, arg in ipairs(args) do
+      game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Upgrades_Purchase"):InvokeServer(arg)
+    end
+  end
+end
 
 local Tab = Window:MakeTab({
   Name = "Home",
@@ -73,11 +75,11 @@ Tab3:AddToggle({
   end    
 })
 
--- Tab5:AddToggle({
---   Name = "Auto Upgrades",
---   Default = false,
---   Callback = function(Value)
---     _G.autoupgrades = Value
---     autoupgrades()
---   end    
--- })
+Tab5:AddToggle({
+  Name = "Auto Upgrades",
+  Default = false,
+  Callback = function(Value)
+    _G.autoupgrades = Value
+    autoupgrades()
+  end    
+})
