@@ -13,7 +13,7 @@ function rolls()
 end
 
 function autoupgrades()
-  local upgradeObject = game.workspace.__THINGS.Upgrades
+  local upgradeObject = game.workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
   if upgradeObject then
       for _, child in pairs(upgradeObject:GetChildren()) do
           print(child.Name) -- Выводим имя каждого дочернего объекта
