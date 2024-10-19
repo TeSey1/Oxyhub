@@ -13,15 +13,13 @@ function rolls()
 end
 
 function autoupgrades()
-  while _G.autoupgrades == true do
-    local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
-    if upgradeObject then
-        for _, child in pairs(upgradeObject:GetChildren()) do
-            print(child.Name) -- Выводим имя каждого дочернего объекта
-        end
-    else
-        print("Объект не найден!")
-    end
+  local upgradeObject = workspace.__THINGS.Upgrades["Upgrades Frontend Render"]
+  if upgradeObject then
+      for _, child in pairs(upgradeObject:GetChildren()) do
+          print(child.Name) -- Выводим имя каждого дочернего объекта
+      end
+  else
+      print("Объект не найден!")
   end
 end
 
