@@ -29,7 +29,7 @@ ToggleButton.Parent = MainFrame
 -- Функция для сворачивания/разворачивания
 local isOpen = true
 ToggleButton.MouseButton1Click:Connect(function()
-    isOpen = not isOpen MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 300, 0, 300)
+    isOpen = not isOpen MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 70, 0, 70)
     ToggleButton.Text = isOpen and "🔼" or "🔽"
 end)
 
