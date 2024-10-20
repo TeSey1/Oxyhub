@@ -49,6 +49,19 @@ function autoupgrades()
     end
 end
 
+function showpets()
+	local args = {
+    	[1] = "ShowOtherPets",
+    	[2] = "PetSFX",
+    	[3] = "PetAuras",
+    	[4] = "FireworkShow"
+	}
+	local networkService = game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting")
+	for i = 1, #args do
+    	networkService:InvokeServer(args[i])
+	end
+end
+
 -----------------------------------------------
 
 -----------------------------------------------
@@ -111,6 +124,7 @@ Tab2:AddToggle({
   Name = "Show Pets",
   Default = false,
   Callback = function(Value)
+			showpets()
   end
 })
 
