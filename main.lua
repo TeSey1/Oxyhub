@@ -6,6 +6,7 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
+_G.showpets = true
 
 -----------------------------------------------
 
@@ -50,15 +51,17 @@ function autoupgrades()
 end
 
 function showpets()
-    local args = {
-        [1] = "ShowOtherPets",
-        [2] = "PetSFX",
-        [3] = "PetAuras",
-        [4] = "FireworkShow"
-    }
-    for i = 1, #args do
-        game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting"):InvokeServer(args[i])
-    end
+	if _G.showpets == true or _G.showpets == false then
+		local args = {
+    		[1] = "ShowOtherPets",
+    		[2] = "PetSFX",
+    		[3] = "PetAuras",
+    		[4] = "FireworkShow"
+		}
+        for i = 1, #args do
+            game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting"):InvokeServer(args[i])
+        end
+	end
 end
 
 -----------------------------------------------
@@ -123,6 +126,7 @@ Tab2:AddToggle({
     Name = "Show Pets",
     Default = false,
     Callback = function(Value)
+		_G.showpets = Value
 		showpets()
     end
 })
