@@ -127,6 +127,7 @@ Tab2:AddToggle({
 		_G.showpets = Value
         if _G.showpets then
 		    showpets()
+        end
     end
 })
 
