@@ -8,6 +8,7 @@ local ButtonSpy = Instance.new("TextButton")
 local ButtonDex = Instance.new("TextButton")
 local ButtonBetaOxyHub = Instance.new("TextButton")
 local ButtonGlobalOxyHub = Instance.new("TextButton")
+local UICorner = Instance.new("UICorner")
 
 -- Настройка ScreenGui
 ScreenGui.Parent = Player:WaitForChild("PlayerGui")
@@ -22,6 +23,10 @@ Frame.AnchorPoint = Vector2.new(0.5, 0.5)
 Frame.Active = true
 Frame.Draggable = true
 Frame.Parent = ScreenGui
+
+-- Добавление UICorner для скругленных углов
+UICorner.CornerRadius = UDim.new(0, 10)
+UICorner.Parent = Frame
 
 -- Настройка кнопки закрытия
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
@@ -43,48 +48,26 @@ local minimized = false
 
 MinimizeButton.MouseButton1Click:Connect(function()
     if not minimized then
-        Frame.Size = UDim2.new(0, 30, 0, 30)
-        minimized = true else
-        Frame.Size = UDim2.new(0, 200, 0, 300)
-        minimized = false end
+        Frame.Visible = false -- Скрыть меню при сворачивании
+        minimized = true
+    else
+        Frame.Visible = true -- Показать меню при разворачивании minimized = false
+    end
 end)
 
--- Настройка кнопки Spy
-ButtonSpy.Size = UDim2.new(0, 180, 0, 50)
-ButtonSpy.Position = UDim2.new(0, 10, 0, 50)
-ButtonSpy.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-ButtonSpy.Text = "Spy"
-ButtonSpy.Parent = Frame
-ButtonSpy.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua'))()
-end)
+-- Функция для создания кнопок
+local function createButton(name, position, url)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0, 180, 0, 50)
+    button.Position = position button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    button.TextColor3 = Color3.fromRGB(255, 255, 255) -- Светлый текст button.Text = name button.Parent = Frame button.MouseButton1Click:Connect(function()
+        loadstring(game:HttpGet(url))()
+    end)
+    return button
+end
 
--- Настройка кнопки Dex
-ButtonDex.Size = UDim2.new(0, 180, 0, 50)
-ButtonDex.Position = UDim2.new(0, 10, 0, 110)
-ButtonDex.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-ButtonDex.Text = "Dex"
-ButtonDex.Parent = Frame
-ButtonDex.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888"))()
-end)
-
--- Настройка кнопки Beta OxyHub
-ButtonBetaOxyHub.Size = UDim2.new(0, 180, 0, 50)
-ButtonBetaOxyHub.Position = UDim2.new(0, 10, 0, 170)
-ButtonBetaOxyHub.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-ButtonBetaOxyHub.Text = "Beta OxyHub"
-ButtonBetaOxyHub.Parent = Frame
-ButtonBetaOxyHub.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua"))()
-end)
-
--- Настройка кнопки Global OxyHub
-ButtonGlobalOxyHub.Size = UDim2.new(0, 180, 0, 50)
-ButtonGlobalOxyHub.Position = UDim2.new(0, 10, 0, 230)
-ButtonGlobalOxyHub.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-ButtonGlobalOxyHub.Text = "Global OxyHub"
-ButtonGlobalOxyHub.Parent = Frame
-ButtonGlobalOxyHub.MouseButton1Click:Connect(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua"))()
-end)
+-- Настройка кнопок
+createButton("Spy", UDim2.new(0, 10, 0, 50), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
+createButton("Dex", UDim2.new(0, 10, 0, 110), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
+createButton("Beta OxyHub", UDim2.new(0, 10, 0, 170), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
+createButton("Global OxyHub", UDim2.new(0, 10, 0, 230), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua")
