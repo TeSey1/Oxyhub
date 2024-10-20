@@ -58,9 +58,7 @@ function showpets()
 			[3] = "PetAuras",
 			[4] = "FireworkShow"
 		}
-		
 		local networkService = game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting")
-		
 		for i = 1, #args do
 			networkService:InvokeServer(args[i])
 		end
@@ -124,7 +122,8 @@ Tab:AddButton({
 })
 
 -----------------------------------------------
-Tab3:AddToggle({
+
+Tab2:AddToggle({
   Name = "Show Pets",
   Default = false,
   Callback = function(Value)
