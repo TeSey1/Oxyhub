@@ -51,8 +51,18 @@ function autoupgrades()
 end
 
 function showpets()
-	if _G.showpets == true or _G.showpets == false then
+	if _G.showpets == true then
 		local args = {
+    		[1] = "ShowOtherPets",
+    		[2] = "PetSFX",
+    		[3] = "PetAuras",
+    		[4] = "FireworkShow"
+		}
+        for i = 1, #args do
+            game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting"):InvokeServer(args[i])
+        end
+    else 
+        local args = {
     		[1] = "ShowOtherPets",
     		[2] = "PetSFX",
     		[3] = "PetAuras",
