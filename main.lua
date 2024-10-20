@@ -51,7 +51,7 @@ function autoupgrades()
 end
 
 function showpets()
-	if _G.showpets == true
+	if _G.showpets == true then
 		local args = {
 			[1] = "ShowOtherPets",
 			[2] = "PetSFX",
@@ -125,10 +125,10 @@ Tab:AddButton({
 
 -----------------------------------------------
 Tab3:AddToggle({
-  Name = "Auto Roll",
+  Name = "Show Pets",
   Default = false,
   Callback = function(Value)
-			_G.showpets = Value
+	  _G.showpets = Value
       showpets()
   end
 })
