@@ -123,11 +123,12 @@ Tab:AddButton({
 -----------------------------------------------
 Tab2:AddToggle({
   Name = "Show Pets",
-  Derfault = false,
+  Default = false,
   Callback = function(Value)
       showpets()
   end
 })
+
 -----------------------------------------------
 
 Tab3:AddToggle({
