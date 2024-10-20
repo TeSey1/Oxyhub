@@ -51,7 +51,7 @@ function autoupgrades()
 end
 
 function showpets()
-    if _G.showpets == true then
+    if _G.showpets then
         local args = {
             [1] = "ShowOtherPets",
             [2] = "PetSFX",
@@ -124,7 +124,7 @@ Tab:AddButton({
 
 Tab2:AddToggle({
     Name = "Show Pets",
-    Default = false,
+    Default = true,
     Callback = function(Value)
 		_G.showpets = Value
         showpets()
