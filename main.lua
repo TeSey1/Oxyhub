@@ -6,7 +6,7 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
-_G.showpets = false
+_G.showpets = true
 
 -----------------------------------------------
 
@@ -113,7 +113,7 @@ Tab2:AddToggle({
     Default = false,
     Callback = function(Value)
 		_G.showpets = Value
-        if _G.showpets == true then
+        if _G.showpets then
             local args = {
                 [1] = "ShowOtherPets",
                 [2] = "PetSFX",
