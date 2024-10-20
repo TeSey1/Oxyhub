@@ -69,39 +69,39 @@ end
 -----------------------------------------------
 
 local Tab = Window:MakeTab({
-  Name = "Home",
-  Icon = "rbxassetid://138276043416989",
-  PremiumOnly = false
+    Name = "Home",
+    Icon = "rbxassetid://138276043416989",
+    PremiumOnly = false
 })
 local Tab2 = Window:MakeTab({
-  Name = "Optimization",
-  Icon = "rbxassetid://103268983581906",
-  PremiumOnly = false
+    Name = "Optimization",
+    Icon = "rbxassetid://103268983581906",
+    PremiumOnly = false
 })
 local Tab3 = Window:MakeTab({
-  Name = "Rolls",
-  Icon = "rbxassetid://106353115333120",
-  PremiumOnly = false
+    Name = "Rolls",
+    Icon = "rbxassetid://106353115333120",
+    PremiumOnly = false
 })
 local Tab4 = Window:MakeTab({
-  Name = "Breakbles",
-  Icon = "rbxassetid://135708807327995",
-  PremiumOnly = false
+    Name = "Breakbles",
+    Icon = "rbxassetid://135708807327995",
+    PremiumOnly = false
 })
 local Tab5 = Window:MakeTab({
-  Name = "Autos",
-  Icon = "rbxassetid://139399181305478",
-  PremiumOnly = false
+    Name = "Autos",
+    Icon = "rbxassetid://139399181305478",
+    PremiumOnly = false
 })
 local Tab6 = Window:MakeTab({
-  Name = "Profile",
-  Icon = "rbxassetid://117514197104865",
-  PremiumOnly = false
+    Name = "Profile",
+    Icon = "rbxassetid://117514197104865",
+    PremiumOnly = false
 })
 local Tab7 = Window:MakeTab({
-  Name = "Settings",
-  Icon = "rbxassetid://86008121828405",
-  PremiumOnly = false
+    Name = "Settings",
+    Icon = "rbxassetid://86008121828405",
+    PremiumOnly = false
 })
 
 -----------------------------------------------
@@ -109,37 +109,38 @@ local Tab7 = Window:MakeTab({
 -----------------------------------------------
 
 local Section = Tab:AddSection({
-  Name = "Information"
+    Name = "Information"
 })
 
 Tab:AddParagraph("Hello " .. api.nickname .. "!","\nScript version: b0.1\nLast Update: 10/19/2024\n")
 Tab:AddButton({
 	Name = "Copy Discord Server Link",
 	Callback = function()
-      setclipboard("https://discord.gg/gPt63592fA")
+        setclipboard("https://discord.gg/gPt63592fA")
   	end    
 })
 
 -----------------------------------------------
 
 Tab2:AddToggle({
-  Name = "Show Pets",
-  Default = false,
-  Callback = function(Value)
-			_G.showpets = Value
-			showpets()
-  end
+    Name = "Show Pets",
+    Default = false,
+    Callback = function(Value)
+		_G.showpets = Value
+		showpets()
+    end
 })
 
 -----------------------------------------------
 
 Tab3:AddToggle({
-  Name = "Auto Roll",
-  Default = false,
-  Callback = function(Value)
-      _G.rolls = Value
-      rolls()
-  end    
+    Name = "Auto Roll",
+    Default = false,
+    Callback = function(Value)
+        _G.rolls = Value
+        rolls()
+
+    end    
 })
 
 -----------------------------------------------
@@ -147,12 +148,12 @@ Tab3:AddToggle({
 -----------------------------------------------
 
 Tab5:AddToggle({
-  Name = "Auto Upgrades",
-  Default = false,
-  Callback = function(Value)
-    _G.autoupgrades = Value
-    autoupgrades()
-  end    
+    Name = "Auto Upgrades",
+    Default = false,
+    Callback = function(Value)
+        _G.autoupgrades = Value
+        autoupgrades()
+    end    
 })
 
 -----------------------------------------------
