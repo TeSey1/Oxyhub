@@ -1,10 +1,6 @@
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local ToggleButton = Instance.new("TextButton")
-local SpyButton = Instance.new("TextButton")
-local DexButton = Instance.new("TextButton")
-local BetaOxyHubButton = Instance.new("TextButton")
-local GlobalOxyHubButton = Instance.new("TextButton")
 
 -- Настройки GUI
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -26,12 +22,18 @@ ToggleButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 ToggleButton.Text = "🔼"
 ToggleButton.Parent = MainFrame
 
--- Функция для сворачивания/разворачивания
+-- Переменная для отслеживания состояния интерфейса
 local isOpen = true
+
+-- Функция для сворачивания/разворачивания
 ToggleButton.MouseButton1Click:Connect(function()
-    isOpen = not isOpen 
-    MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 30, 0, 30)
+    isOpen = not isOpen MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 30, 0, 30)
     ToggleButton.Text = isOpen and "🔼" or "🔽"
+
+    -- Обновление видимости кнопок for _, child in pairs(MainFrame:GetChildren()) do
+        if child:IsA("TextButton") and child ~= ToggleButton then
+            child.Visible = isOpen end
+    end
 end)
 
 -- Перетаскивание GUI
@@ -42,13 +44,13 @@ local startPos
 
 local function startDrag(input)
     dragging = true
-    dragStart = input.Position
-    startPos = MainFrame.Position
+    dragStart = input.Position startPos = MainFrame.Position
 end
 
 local function updateDrag(input)
     if dragging then
-        local delta = input.Position - dragStart MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        local delta = input.Position - dragStart
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end
 
@@ -57,10 +59,10 @@ local function endDrag()
 end
 
 MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then startDrag(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        startDrag(input)
         input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then endDrag()
-            end
+            if input.UserInputState == Enum.UserInputState.End then endDrag() end
         end)
     end
 end)
@@ -70,37 +72,21 @@ MainFrame.InputChanged:Connect(function(input)
     end
 end)
 
--- Перетаскивание иконки в свернутом режиме
-ToggleButton.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then startDrag(input)
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then endDrag()
-            end
-        end)
-    end
-end)
-
-ToggleButton.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement then
-        updateDrag(input)
-    end
-end)
-
 -- Настройка кнопок
 local function createButton(name, position, url)
     local button = Instance.new("TextButton")
-    button.Name = name button.Size = UDim2.new(1, 0, 0, 40)
-    button.Position = position button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    button.Name = name
+    button.Size = UDim2.new(1, 0, 0, 40)
+    button.Position = position
+    button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
     button.Text = name
-    button.Parent = MainFrame button.MouseButton1Click:Connect(function()
+    button.Parent = MainFrame button.Visible = isOpen  -- Устанавливаем видимость в зависимости от состояния button.MouseButton1Click:Connect(function()
         loadstring(game:HttpGet(url))()
     end)
 
-    -- Добавление тени
-    local shadow = Instance.new("UIShadow")
-    shadow.Parent = button
-    shadow.Offset = Vector2.new(2, 2)
+    -- Добавление тени local shadow = Instance.new("UIShadow")
+    shadow.Parent = button shadow.Offset = Vector2.new(2, 2)
     shadow.Transparency = 0.5
 end
 
@@ -111,9 +97,11 @@ createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, 120), "https://raw.gi
 createButton("Global OxyHub", UDim2.new(0, 0, 0, 160), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main.lua")
 
 -- Установка стилей кнопок
-for _, button in pairs(MainFrame:GetChildren()) do if button:IsA("TextButton") then button.Font = Enum.Font.SourceSans
-        button.TextSize = 18 button.BackgroundTransparency = 0.3 button.BorderSizePixel = 0
-    end
+for _, button in pairs(MainFrame:GetChildren()) do
+    if button:IsA("TextButton") then button.Font = Enum.Font.SourceSans
+        button.TextSize = 18
+        button.BackgroundTransparency = 0.3
+        button.BorderSizePixel = 0 end
 end
 
 -- Установка скругленных углов для основного фрейма
