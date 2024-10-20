@@ -58,10 +58,8 @@ function showpets()
     		[3] = "PetAuras",
     		[4] = "FireworkShow"
 		}
-        local networkService = game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting")
-
         for i = 1, #args do
-            networkService:InvokeServer(args[i])
+            game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting"):InvokeServer(args[i])
         end
 	end
 end
