@@ -1,89 +1,90 @@
+local Players = game:GetService("Players")
+local Player = Players.LocalPlayer
 local ScreenGui = Instance.new("ScreenGui")
-local MainFrame = Instance.new("Frame")
-local ToggleButton = Instance.new("TextButton")
-local SpyButton = Instance.new("TextButton")
-local DexButton = Instance.new("TextButton")
-local BetaOxyHubButton = Instance.new("TextButton")
-local GlobalOxyHubButton = Instance.new("TextButton")
+local Frame = Instance.new("Frame")
+local CloseButton = Instance.new("TextButton")
+local MinimizeButton = Instance.new("TextButton")
+local ButtonSpy = Instance.new("TextButton")
+local ButtonDex = Instance.new("TextButton")
+local ButtonBetaOxyHub = Instance.new("TextButton")
+local ButtonGlobalOxyHub = Instance.new("TextButton")
 
--- Настройки GUI
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+-- Настройка ScreenGui
+ScreenGui.Parent = Player:WaitForChild("PlayerGui")
 
-MainFrame.Name = "MainFrame"
-MainFrame.Size = UDim2.new(0, 300, 0, 200)
-MainFrame.Position = UDim2.new(0.5, -150, 0.5, -100)
-MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 30) -- Темный фон
-MainFrame.BorderSizePixel = 0
-MainFrame.BackgroundTransparency = 0.2
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.ClipsDescendants = true
-MainFrame.Parent = ScreenGui
+-- Настройка Frame
+Frame.Size = UDim2.new(0, 200, 0, 300)
+Frame.Position = UDim2.new(0.5, -100, 0.5, -150)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BorderSizePixel = 0
+Frame.BackgroundTransparency = 0.2
+Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame.Active = true
+Frame.Draggable = true
+Frame.Parent = ScreenGui
 
-ToggleButton.Name = "ToggleButton"
-ToggleButton.Size = UDim2.new(0, 30, 0, 30)
-ToggleButton.Position = UDim2.new(1, -35, 0, 5)
-ToggleButton.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-ToggleButton.Text = "🔼"
-ToggleButton.Parent = MainFrame
-
--- Функция для сворачивания/разворачивания
-local isOpen = true
-ToggleButton.MouseButton1Click:Connect(function()
-    isOpen = not isOpen MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 30, 0, 30)
-    ToggleButton.Text = isOpen and "🔼" or "🔽"
+-- Настройка кнопки закрытия
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -35, 0, 5)
+CloseButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+CloseButton.Text = "X"
+CloseButton.Parent = Frame
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
 end)
 
--- Перетаскивание GUI
-local dragging
-local dragInput
-local dragStart
-local startPos
+-- Настройка кнопки сворачивания
+MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Position = UDim2.new(1, -70, 0, 5)
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(255, 255, 0)
+MinimizeButton.Text = "-"
+MinimizeButton.Parent = Frame
+local minimized = false
 
-MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
-    end
+MinimizeButton.MouseButton1Click:Connect(function()
+    if not minimized then
+        Frame.Size = UDim2.new(0, 30, 0, 30)
+        minimized = true else
+        Frame.Size = UDim2.new(0, 200, 0, 300)
+        minimized = false end
 end)
 
-MainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
-        local delta = input.Position - dragStart MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-    end
+-- Настройка кнопки Spy
+ButtonSpy.Size = UDim2.new(0, 180, 0, 50)
+ButtonSpy.Position = UDim2.new(0, 10, 0, 50)
+ButtonSpy.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ButtonSpy.Text = "Spy"
+ButtonSpy.Parent = Frame
+ButtonSpy.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua'))()
 end)
 
--- Настройка кнопок
-local function createButton(name, position, url)
-    local button = Instance.new("TextButton")
-    button.Name = name button.Size = UDim2.new(1, 0, 0, 40)
-    button.Position = position button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Text = name
-    button.Parent = MainFrame button.MouseButton1Click:Connect(function()
-        loadstring(game:HttpGet(url))()
-    end)
-end
+-- Настройка кнопки Dex
+ButtonDex.Size = UDim2.new(0, 180, 0, 50)
+ButtonDex.Position = UDim2.new(0, 10, 0, 110)
+ButtonDex.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ButtonDex.Text = "Dex"
+ButtonDex.Parent = Frame
+ButtonDex.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888"))()
+end)
 
--- Создание кнопок
-createButton("Spy", UDim2.new(0, 0, 0, 40), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
-createButton("Dex", UDim2.new(0, 0, 0, 80), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
-createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, 120), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
-createButton("Global OxyHub", UDim2.new(0, 0, 0, 160), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua")
+-- Настройка кнопки Beta OxyHub
+ButtonBetaOxyHub.Size = UDim2.new(0, 180, 0, 50)
+ButtonBetaOxyHub.Position = UDim2.new(0, 10, 0, 170)
+ButtonBetaOxyHub.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ButtonBetaOxyHub.Text = "Beta OxyHub"
+ButtonBetaOxyHub.Parent = Frame
+ButtonBetaOxyHub.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua"))()
+end)
 
--- Установка стилей кнопок
-for _, button in pairs(MainFrame:GetChildren()) do if button:IsA("TextButton") then button.Font = Enum.Font.SourceSans
-        button.TextSize = 18 button.BackgroundTransparency = 0.3 button.BorderSizePixel = 0
-    end
-end
-
--- Установка скругленных углов для основного фрейма
-local UICorner = Instance.new("UICorner", MainFrame)
-UICorner.CornerRadius = UDim.new(0, 10)
-
--- Установка скругленных углов для кнопки переключения
-local ToggleCorner = Instance.new("UICorner", ToggleButton)
-ToggleCorner.CornerRadius = UDim.new(0, 10)
+-- Настройка кнопки Global OxyHub
+ButtonGlobalOxyHub.Size = UDim2.new(0, 180, 0, 50)
+ButtonGlobalOxyHub.Position = UDim2.new(0, 10, 0, 230)
+ButtonGlobalOxyHub.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+ButtonGlobalOxyHub.Text = "Global OxyHub"
+ButtonGlobalOxyHub.Parent = Frame
+ButtonGlobalOxyHub.MouseButton1Click:Connect(function()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua"))()
+end)
