@@ -6,7 +6,6 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
-_G.showpets = true
 
 -----------------------------------------------
 
@@ -48,21 +47,6 @@ function autoupgrades()
         local rootFolder = game:GetService("ReplicatedStorage").__DIRECTORY.Upgrades.Root  -- Замените на вашу папку
         processFolder(rootFolder)
     end
-end
-
-function showpets()
-	if _G.showpets == true then
-		local args = {
-			[1] = "ShowOtherPets",
-			[2] = "PetSFX",
-			[3] = "PetAuras",
-			[4] = "FireworkShow"
-		}
-		local networkService = game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting")
-		for i = 1, #args do
-			networkService:InvokeServer(args[i])
-		end
-	end
 end
 
 -----------------------------------------------
@@ -127,8 +111,6 @@ Tab2:AddToggle({
   Name = "Show Pets",
   Default = false,
   Callback = function(Value)
-	  _G.showpets = Value
-      showpets()
   end
 })
 
