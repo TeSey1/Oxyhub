@@ -5,10 +5,6 @@ local CloseButton = Instance.new("TextButton")
 local CreateButton = Instance.new("TextButton")
 local NameInput = Instance.new("TextBox")
 local UrlInput = Instance.new("TextBox")
-local SpyButton = Instance.new("TextButton")
-local DexButton = Instance.new("TextButton")
-local BetaOxyHubButton = Instance.new("TextButton")
-local GlobalOxyHubButton = Instance.new("TextButton")
 
 -- Настройки GUI
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -58,8 +54,8 @@ UrlInput.Parent = MainFrame
 -- Функция для сворачивания/разворачивания
 local isOpen = true
 ToggleButton.MouseButton1Click:Connect(function()
-    isOpen = not isOpen MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 40, 0, 40) -- Увеличенный размер в свернутом состоянии
-    ToggleButton.Text = isOpen and "🔼" or "🔽"
+    isOpen = not isOpen 
+    MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 40, 0, 40) -- Увеличенный размер в свернутом состоянии ToggleButton.Text = isOpen and "🔼" or "🔽"
 end)
 
 -- Функция для закрытия GUI
@@ -68,15 +64,35 @@ CloseButton.MouseButton1Click:Connect(function()
 end)
 
 -- Функция для создания новой кнопки
+local function createButton(name, position, url)
+    local button = Instance.new("TextButton")
+    button.Name = name button.Size = UDim2.new(1, 0, 0, 40)
+    button.Position = position button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.Text = name
+    button.Parent = MainFrame button.MouseButton1Click:Connect(function()
+        loadstring(game:HttpGet(url))()
+    end)
+end
+
+-- Создание кнопок по умолчанию
+local buttonYPosition = 40
+createButton("Spy", UDim2.new(0, 0, 0, buttonYPosition), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
+buttonYPosition = buttonYPosition + 40
+createButton("Dex", UDim2.new(0, 0, 0, buttonYPosition), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
+buttonYPosition = buttonYPosition + 40
+createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, buttonYPosition), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
+buttonYPosition = buttonYPosition + 40
+createButton("Global OxyHub", UDim2.new(0, 0, 0, buttonYPosition), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main.lua")
+
+-- Функция для добавления новой кнопки по вводу
 CreateButton.MouseButton1Click:Connect(function()
     local buttonName = NameInput.Text
-    local buttonUrl = UrlInput.Text
-
-    if buttonName ~= "" and buttonUrl ~= "" then
-        createButton(buttonName, UDim2.new(0, 0, 0, 40 * (#MainFrame:GetChildren() - 5)), buttonUrl) -- #MainFrame:GetChildren() - 5 для учета других элементов NameInput.Text = ""
-        UrlInput.Text = ""
-    else
-        print("Пожалуйста, введите название и URL.") -- Сообщение об ошибке
+    local buttonUrl = UrlInput.Text if buttonName ~= "" and buttonUrl ~= "" then
+        createButton(buttonName, UDim2.new(0, 0, 0, buttonYPosition), buttonUrl) -- Создание новой кнопки buttonYPosition = buttonYPosition + 40 -- Увеличение позиции для следующей кнопки
+        NameInput.Text = "" -- Очистка поля ввода
+        UrlInput.Text = "" -- Очистка поля ввода
+    else print("Пожалуйста, введите название и URL.") -- Сообщение об ошибке
     end
 end)
 
@@ -87,44 +103,23 @@ local dragStart
 local startPos
 
 MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position input.Changed:Connect(function()
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then 
+        dragging = true dragStart = input.Position
+        startPos = MainFrame.Position 
+        input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then dragging = false
-            end
-        end)
+            end end)
     end
 end)
 
 MainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
-        local delta = input.Position - dragStart MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+    if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then local delta = input.Position - dragStart MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end)
 
--- Настройка кнопок
-local function createButton(name, position, url)
-    local button = Instance.new("TextButton")
-    button.Name = name button.Size = UDim2.new(1, 0, 0, 40)
-    button.Position = position button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
-    button.TextColor3 = Color3.fromRGB(255, 255, 255)
-    button.Text = name
-    button.Parent = MainFrame 
-    button.MouseButton1Click:Connect(function()
-        loadstring(game:HttpGet(url))()
-    end)
-end
-
--- Создание кнопок
-createButton("Spy", UDim2.new(0, 0, 0, 40), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
-createButton("Dex", UDim2.new(0, 0, 0, 80), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
-createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, 120), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
-createButton("Global OxyHub", UDim2.new(0, 0, 0, 160), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main.lua")
-
 -- Установка стилей кнопок
-for _, button in pairs(MainFrame:GetChildren()) do if button:IsA("TextButton") then button.Font = Enum.Font.SourceSans
-        button.TextSize = 18 
-        button.BackgroundTransparency = 0.3 button.BorderSizePixel = 0
+for _, button in pairs(MainFrame:GetChildren()) do if button:IsA("TextButton") then 
+        button.Font = Enum.Font.SourceSans button.TextSize = 18 button.BackgroundTransparency = 0.3 button.BorderSizePixel = 0
     end
 end
 
