@@ -6,7 +6,7 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
-_G.showpets = true
+_G.showpets = false
 
 -----------------------------------------------
 
