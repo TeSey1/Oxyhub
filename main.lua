@@ -124,8 +124,7 @@ Tab2:AddToggle({
     Name = "Show Pets",
     Default = false,
     Callback = function(Value)
-		--_G.showpets = Value if _G.showpets then showpets()
-        --end
+		_G.showpets = Value
     end
 })
 
