@@ -14,8 +14,8 @@ _G.showpets = true
 
 function rolls()
     while _G.rolls == true do
-         game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Eggs_Roll"):InvokeServer()
-         wait(1)  -- Пауза в 1 секунду между вызовами (можно изменить)
+        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Eggs_Roll"):InvokeServer()
+        wait(1)  -- Пауза в 1 секунду между вызовами (можно изменить)
     end
 end
 
@@ -47,6 +47,20 @@ function autoupgrades()
         -- Пример использования: передаем папку для обработки
         local rootFolder = game:GetService("ReplicatedStorage").__DIRECTORY.Upgrades.Root  -- Замените на вашу папку
         processFolder(rootFolder)
+    end
+end
+
+function showpets()
+    if _G.showpets == true then
+        local args = {
+            [1] = "ShowOtherPets",
+            [2] = "PetSFX",
+            [3] = "PetAuras",
+            [4] = "FireworkShow"
+        }
+        for i = 1, #args do
+            game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting"):InvokeServer(args[i])
+        end
     end
 end
 
@@ -113,17 +127,7 @@ Tab2:AddToggle({
     Default = false,
     Callback = function(Value)
 		_G.showpets = Value
-        if _G.showpets then
-            local args = {
-                [1] = "ShowOtherPets",
-                [2] = "PetSFX",
-                [3] = "PetAuras",
-                [4] = "FireworkShow"
-            }
-            for i = 1, #args do
-                game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting"):InvokeServer(args[i])
-            end
-        end
+        showpets()
     end
 })
 
