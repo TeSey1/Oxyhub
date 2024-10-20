@@ -30,7 +30,8 @@ ToggleButton.MouseButton1Click:Connect(function()
     isOpen = not isOpen MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 30, 0, 30)
     ToggleButton.Text = isOpen and "🔼" or "🔽"
 
-    -- Обновление видимости кнопок for _, child in pairs(MainFrame:GetChildren()) do
+    -- Обновление видимости кнопок 
+    for _, child in pairs(MainFrame:GetChildren()) do
         if child:IsA("TextButton") and child ~= ToggleButton then
             child.Visible = isOpen end
     end
@@ -81,11 +82,13 @@ local function createButton(name, position, url)
     button.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
     button.Text = name
-    button.Parent = MainFrame button.Visible = isOpen  -- Устанавливаем видимость в зависимости от состояния button.MouseButton1Click:Connect(function()
+    button.Parent = MainFrame button.Visible = isOpen  -- Устанавливаем видимость в зависимости от состояния 
+    button.MouseButton1Click:Connect(function()
         loadstring(game:HttpGet(url))()
     end)
 
-    -- Добавление тени local shadow = Instance.new("UIShadow")
+    -- Добавление тени
+    local shadow = Instance.new("UIShadow")
     shadow.Parent = button shadow.Offset = Vector2.new(2, 2)
     shadow.Transparency = 0.5
 end
