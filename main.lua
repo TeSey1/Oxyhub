@@ -134,7 +134,7 @@ Tab:AddButton({
 
 Tab2:AddToggle({
     Name = "Show Pets",
-    Default = true,
+    Default = false,
     Callback = function(Value)
 		_G.showpets = Value
         showpets()
