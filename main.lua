@@ -152,8 +152,8 @@ function hideBreakables()
         end
 
         for _, obj in ipairs(breakablesFolder:GetDescendants()) do
-            if obj:IsA("MeshPart") and obj.Name ~= "Highlight" then 
-                obj.Transparency = 1 -- Делаем объект невидимым
+            if obj:IsA("MeshPart") then -- Проверяем, является ли объект частью
+                obj.Transparency = _G.Breakables and 1 or 0 -- Меняем Transparency
             end
         end
         wait(1)
