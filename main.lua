@@ -70,45 +70,19 @@ function showDetails()
 end
 
 function hidePets()
-    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами 
-    local hasHidden = false  -- Флаг для отслеживания, были ли скрыты питомцы 
-    for _, obj in ipairs(petsFolder:GetChildren()) do if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью (Part, MeshPart и т.д.)
-            obj.Transparency = 1  -- Делаем объект полностью прозрачным
-            obj.CanCollide = false  -- Отключаем столкновение
-            obj.Anchored = true  -- Фиксируем объект 
-            hasHidden = true  -- Устанавливаем флаг, что хотя бы один питомец был скрыт
-        else 
-            print(obj.Name .. " не является физической частью и не был скрыт.")
-        end end
-
-    if hasHidden then
-        print("Питомцы скрыты.")
-    else
-        print("Не найдено питомцев для скрытия.")
-    end
+    local args = {
+        [1] = "ShowOtherPets",
+        [2] = "PetSFX",
+        [3] = "PetAuras",
+        [4] = "FireworkShow"
+    }
+    
+    local networkService = game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting")
+    
+    for i = 1, #args do
+        networkService:InvokeServer(args[i])
+    end    
 end
-
-function showPets()
-    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
-    local hasShown = false  -- Флаг для отслеживания, были ли восстановлены питомцы
-
-    for _, obj in ipairs(petsFolder:GetChildren()) do
-        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью
-            obj.Transparency = 0  -- Возвращаем видимость объекта
-            obj.CanCollide = true  -- Включаем столкновение 
-            obj.Anchored = false  -- Отключаем фиксацию
-            hasShown = true  -- Устанавливаем флаг, что хотя бы один питомец был восстановлен 
-        else
-            print(obj.Name .. " не является физической частью и не был восстановлен.")
-        end end
-
-    if hasShown then
-        print("Питомцы восстановлены.")
-    else
-        print("Не найдено питомцев для восстановления.")
-    end
-end
-
 
 
 
@@ -171,16 +145,12 @@ Tab:AddButton({
 
 -----------------------------------------------
 
-Tab2:AddToggle({
+Tab2:AddButton({
     Name = "Show Pets",
     Default = false,
     Callback = function(Value)
         _G.pets = Value
-        if _G.pets == true then
-            hidePets()
-        else
-            showPets()
-        end
+        hidePets()
     end
 })
 
