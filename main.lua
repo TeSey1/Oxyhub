@@ -51,23 +51,23 @@ function autoupgrades()
     end
 end
 
-function hideDetails()
-    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-    for _, obj in ipairs(detailsFolder:GetChildren()) do
-        obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
-    end
-    print("Детали карты скрыты.")
-end
+-- function hideDetails()
+--     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+--     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+--     for _, obj in ipairs(detailsFolder:GetChildren()) do
+--         obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+--     end
+--     print("Детали карты скрыты.")
+-- end
 
-function showDetails()
-    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
-    end
-    print("Детали карты восстановлены.")
-end
+-- function showDetails()
+--     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+--     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+--     for _, obj in ipairs(storage:GetChildren()) do
+--         obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
+--     end
+--     print("Детали карты восстановлены.")
+-- end
 
 function hidePets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
