@@ -71,7 +71,7 @@ end
 
 function hidePets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
-    local storage = game.ReplicatedStorage:FindFirstChild("Pets")  -- Папка для хранения скрытых объектов -- Если папка для хранения не найдена, создаем ее
+    local storage = game.ReplicatedStorageP  -- Папка для хранения скрытых объектов -- Если папка для хранения не найдена, создаем ее
     if not storage then
         storage = Instance.new("Folder")
         storage.Name = "Pets"
@@ -84,7 +84,7 @@ end
 
 function showPets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами 
-    local storage = game.ReplicatedStorage:WaitForChild("Pets")  -- Папка для хранения скрытых объектов
+    local storage = game.ReplicatedStorageP  -- Папка для хранения скрытых объектов
 
     -- Восстанавливаем объекты из папки хранения 
     for _, obj in ipairs(storage:GetChildren()) do 
