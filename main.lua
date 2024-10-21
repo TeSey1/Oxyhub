@@ -236,7 +236,8 @@ function teleportToFruits()
             if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                 local basePart = obj.base -- Получаем объект "base"
                 if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
-                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"               
+                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"        
+                    return
             end
         end
     end
