@@ -152,9 +152,8 @@ function hideBreakables()
         end
 
         for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj.IsA("Meshpart") and obj.Name ~= "Highlight" then 
-                obj.Transparency = 1
-                --obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+            if obj.Name ~= "Highlight" then
+                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
             end
         end
         wait(1)
