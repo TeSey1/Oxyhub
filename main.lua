@@ -62,6 +62,25 @@ function showpets()
     end
 end
 
+function toggleDetails()
+    local detailsFolder = game.Workspace:FindFirstChild("Details")  -- Находим папку Details
+    if not detailsFolder then
+        print("Папка 'Details' не найдена в Workspace.")
+        return
+    end
+
+    for _, obj in ipairs(detailsFolder:GetChildren()) do
+        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью
+            if _G.isHidden then obj.Transparency = 0  -- Делаем объект видимым
+                obj.CanCollide = true  -- Включаем столкновение
+            else
+                obj.Transparency = 1  -- Делаем объект невидимым 
+                obj.CanCollide = false  -- Отключаем столкновение 
+            end
+        end
+    end
+end
+
 -----------------------------------------------
 
 -----------------------------------------------
@@ -133,6 +152,7 @@ Tab2:AddToggle({
     Default = false,
     Callback = function(Value)
         _G.isHidden = Value
+        toggleDetails()
     end
 })
 
