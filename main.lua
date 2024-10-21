@@ -65,7 +65,7 @@ function hideDetails()
     for _, obj in ipairs(detailsFolder:GetChildren()) do
         obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
     end
-    print("Детали карты скрыты.")
+    OrionLib:MakeNotification({Name = "Map details are hidden.", Time = 3})
 end
 
 function showDetails()
@@ -79,7 +79,7 @@ function showDetails()
     for _, obj in ipairs(storage:GetChildren()) do
         obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
     end
-    print("Детали карты восстановлены.")
+    OrionLib:MakeNotification({Name = "Map details have been restored.", Time = 3})
 end
 
 
@@ -95,10 +95,9 @@ function hidePets()
     for _, obj in ipairs(petsFolder:GetChildren()) do 
         if obj.Name ~= "Highlight" then 
             obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
-            print(obj.Name .. " перемещен в ReplicatedStorage.")
         end
     end
-    print("Питомцы скрыты.")
+    OrionLib:MakeNotification({Name = "Pets are hidden.", Time = 3})
 end
     
 function showPets()
@@ -106,9 +105,8 @@ function showPets()
     local storage = game.ReplicatedStorage:FindFirstChild("Pets") -- Папка для хранения скрытых объектов
     for _, obj in ipairs(storage:GetChildren()) do
         obj.Parent = petsFolder -- Перемещаем объекты обратно в Pets
-        print(obj.Name .. " восстановлен в Pets.")
     end
-    print("Все питомцы восстановлены.")
+    OrionLib:MakeNotification({Name = "Pets have been restored.", Time = 3})
 end
 
 function hideWater()
@@ -122,9 +120,8 @@ function hideWater()
 
     for _, obj in ipairs(waterFolder:GetChildren()) do 
         obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
-        print(obj.Name .. " перемещен в ReplicatedStorage.")
     end 
-    print("Все объекты в Water скрыты.")
+    OrionLib:MakeNotification({Name = "Water are hidden.", Time = 3})
 end
 
 function showWater()
@@ -137,9 +134,8 @@ function showWater()
     end
     for _, obj in ipairs(storage:GetChildren()) do
         obj.Parent = waterFolder -- Перемещаем объекты обратно в Water 
-        print(obj.Name .. " восстановлен в Water.")
     end 
-    print("Все объекты в Water восстановлены.")
+    OrionLib:MakeNotification({Name = "Water have been restored.", Time = 3})
 end
 
 
