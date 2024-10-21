@@ -227,20 +227,14 @@ function teleportToFruits()
 
                     -- Теперь проверяем, есть ли у клонированного объекта "base"
                     local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
-                    if basePart and basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
-                        character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-                        print("yep")
-                    end
+                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
                 end
             end
         elseif _G.Breakables == false then
             for _, obj in ipairs(breakablesFolder:GetChildren()) do
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                     local basePart = obj.base -- Получаем объект "base"
-                    if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
-                        character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"        
-                        print("no")
-                    end
+                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"        
                 end
             end
         end
