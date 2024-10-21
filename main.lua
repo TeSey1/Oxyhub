@@ -92,7 +92,8 @@ function hidePets()
     -- Перемещаем объекты в папку хранения 
     for _, obj in ipairs(petsFolder:GetChildren()) do 
         obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
-    end print("Питомцы скрыты.")
+    end 
+    print("Питомцы скрыты.")
 end
 
 function showPets()
@@ -103,8 +104,9 @@ function showPets()
     for _, obj in ipairs(storage:GetChildren()) do 
         if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
             obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets 
-            end
-    end print("Питомцы восстановлены.")
+        end
+    end 
+    print("Питомцы восстановлены.")
 end
 
 
