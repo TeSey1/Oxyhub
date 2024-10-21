@@ -6,6 +6,7 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
+_G.isHidden = true
 
 -----------------------------------------------
 
@@ -124,6 +125,14 @@ Tab2:AddButton({
     Default = false,
     Callback = function(Value)
         showpets()
+    end
+})
+
+Tab2:AddToggle({
+    Name = "Details",
+    Default = false,
+    Callback = function(Value)
+        _G.isHidden = Value
     end
 })
 
