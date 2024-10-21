@@ -213,9 +213,8 @@ end
 
 function teleportToFruits()
     local player = game.Players.LocalPlayer -- Получаем игрока (если скрипт локальный)
-    while _G.Fruits == true do
-        local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в ReplicatedStorage
-        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в Workspace
+    local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в ReplicatedStorage
+    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в Workspace
 
         -- if _G.Breakables == true then
         --     -- Проходим по всем объектам в ReplicatedStorage.Breakables
@@ -232,13 +231,11 @@ function teleportToFruits()
         --         end
         --     end
         -- else
-            for _, obj in ipairs(breakablesFolder:GetChildren()) do
-                if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
-                    local basePart = obj.base -- Получаем объект "base"
-                    if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
-                        player:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-                        
-                end
+        for _, obj in ipairs(breakablesFolder:GetChildren()) do
+            if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
+                local basePart = obj.base -- Получаем объект "base"
+                if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
+                    player:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"               
             end
         end
     end
@@ -385,7 +382,9 @@ Tab5:AddToggle({
     Default = false,
     Callback = function(Value)
         _G.Fruits = Value
-        teleportToFruits()
+        while _G.Fruits == true do
+            teleportToFruits()
+        end
     end
 })
 
