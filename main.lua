@@ -83,7 +83,7 @@ end
 
 function hidePets()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+    local storage = game.ReplicatedStoragePets  -- Папка для хранения скрытых объектов
     for _, obj in ipairs(petsFolder:GetChildren()) do obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
     end
     print("Питомцы скрыты.")
@@ -91,7 +91,7 @@ end
 
 function showPets()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+    local storage = game.ReplicatedStoragePets  -- Папка для хранения скрытых объектов
     for _, obj in ipairs(storage:GetChildren()) do
         if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
             obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets
