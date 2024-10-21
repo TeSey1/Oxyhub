@@ -69,24 +69,24 @@ function showDetails()
     print("Детали карты восстановлены.")
 end
 
-function hidePets()
-    local detailsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-    for _, obj in ipairs(detailsFolder:GetChildren()) do obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
-    end
-    print("Питомцы скрыты.")
-end
+-- function hidePets()
+--     local detailsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с деталями карты
+--     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+--     for _, obj in ipairs(detailsFolder:GetChildren()) do obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+--     end
+--     print("Питомцы скрыты.")
+-- end
 
-function showPets()
-    local detailsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-    for _, obj in ipairs(storage:GetChildren()) do
-        if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
-            obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Pets
-        end
-    end
-    print("Питомцы восстановлены.")
-end
+-- function showPets()
+--     local detailsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с деталями карты
+--     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+--     for _, obj in ipairs(storage:GetChildren()) do
+--         if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
+--             obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Pets
+--         end
+--     end
+--     print("Питомцы восстановлены.")
+-- end
 
 
 -----------------------------------------------
@@ -147,18 +147,18 @@ Tab:AddButton({
 
 -----------------------------------------------
 
-Tab2:AddToggle({
-    Name = "Show Pets",
-    Default = false,
-    Callback = function(Value)
-        _G.pets = Value
-        if _G.pets == true then
-            hidePets()
-        else
-            showPets()
-        end
-    end
-})
+-- Tab2:AddToggle({
+--     Name = "Show Pets",
+--     Default = false,
+--     Callback = function(Value)
+--         _G.pets = Value
+--         if _G.pets == true then
+--             hidePets()
+--         else
+--             showPets()
+--         end
+--     end
+-- })
 
 Tab2:AddToggle({
     Name = "Details",
