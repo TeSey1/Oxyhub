@@ -179,7 +179,7 @@ function hideBreakables()
         local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
         
         for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj:IsA("BasePart") and obj.Name ~= "Highlight" then obj.Transparency = 1 -- Делаем объект невидимым
+            if obj.Name ~= "Highlight" then obj.Transparency = 1 -- Делаем объект невидимым
                 obj.CanCollide = false -- Отключаем коллизии, чтобы можно было кликать по ним
             end
         end
@@ -191,10 +191,8 @@ function showBreakables()
     local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
 
     for _, obj in ipairs(breakablesFolder:GetChildren()) do
-        if obj:IsA("BasePart") then
-            obj.Transparency = 0 -- Делаем объект видимым 
-            obj.CanCollide = true -- Включаем коллизии
-        end
+        obj.Transparency = 0 -- Делаем объект видимым 
+        obj.CanCollide = true -- Включаем коллизии
     end
 end
 
