@@ -141,19 +141,46 @@ function showWorld()
 end
 
 
+-- function hideBreakables()
+--     while _G.Breakables == true do
+--         local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
+--         local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
+--         if not storage then
+--             storage = Instance.new("Folder")
+--             storage.Name = "Breakables"
+--             storage.Parent = game.ReplicatedStorage 
+--         end
+
+--         for _, obj in ipairs(breakablesFolder:GetChildren()) do
+--             if obj.Name ~= "Highlight" then 
+--                 obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+--             end
+--         end
+--         wait(1)
+--     end
+-- end
+
+-- function showBreakables()
+--     local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
+--     local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
+--     if not storage then
+--         storage = Instance.new("Folder")
+--         storage.Name = "Breakables"
+--         storage.Parent = game.ReplicatedStorage 
+--     end
+
+--     for _, obj in ipairs(storage:GetChildren()) do
+--         obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
+--     end
+-- end
+
 function hideBreakables()
     while _G.Breakables == true do
         local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
-        local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
-        if not storage then
-            storage = Instance.new("Folder")
-            storage.Name = "Breakables"
-            storage.Parent = game.ReplicatedStorage 
-        end
-
+        
         for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj.Name ~= "Highlight" then 
-                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+            if obj:IsA("BasePart") and obj.Name ~= "Highlight" then obj.Transparency = 1 -- Делаем объект невидимым
+                obj.CanCollide = false -- Отключаем коллизии, чтобы можно было кликать по ним
             end
         end
         wait(1)
@@ -162,17 +189,15 @@ end
 
 function showBreakables()
     local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
-    local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Breakables"
-        storage.Parent = game.ReplicatedStorage 
-    end
 
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
+    for _, obj in ipairs(breakablesFolder:GetChildren()) do
+        if obj:IsA("BasePart") then
+            obj.Transparency = 0 -- Делаем объект видимым 
+            obj.CanCollide = true -- Включаем коллизии
+        end
     end
 end
+
 
 
 function hideOrbs()
