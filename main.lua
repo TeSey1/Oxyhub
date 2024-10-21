@@ -63,7 +63,7 @@ function showpets()
 end
 
 function toggleDetails()
-    local detailsFolder = game.Workspace:FindFirstChild("Details")  -- Находим папку Details
+    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS") -- Находим папку Details
     if not detailsFolder then
         print("Папка 'Details' не найдена в Workspace.")
         return
