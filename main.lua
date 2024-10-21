@@ -70,18 +70,23 @@ function showDetails()
 end
 
 function hidePets()
-    local args = {
-        [1] = "ShowOtherPets",
-        [2] = "PetSFX",
-        [3] = "PetAuras",
-        [4] = "FireworkShow"
-    }
+    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
+    local storage = game.ReplicatedStorage -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(petsFolder:GetChildren()) do 
+        obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
+    end
+    print("Питомцы скрыты.")
+end
     
-    local networkService = game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting")
-    
-    for i = 1, #args do
-        networkService:InvokeServer(args[i])
-    end    
+function showPets()
+    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
+    local storage = game.ReplicatedStorage -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(storage:GetChildren()) do
+        if obj:IsA("Model") and obj.Name:find("Pet") then -- Проверяем, является ли объект моделью питомца
+            obj.Parent = petsFolder -- Перемещаем объекты обратно в Pets
+        end
+    end
+    print("Питомцы восстановлены.")
 end
 
 
@@ -145,12 +150,16 @@ Tab:AddButton({
 
 -----------------------------------------------
 
-Tab2:AddButton({
+Tab2:AddToggle({
     Name = "Show Pets",
     Default = false,
     Callback = function(Value)
         _G.pets = Value
-        hidePets()
+        if _G.pets == true then
+            hidePets()
+        else
+            showPets()
+        end
     end
 })
 
