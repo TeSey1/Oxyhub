@@ -7,6 +7,7 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 _G.rolls = true
 _G.autoupgrades = true
 _G.isHidden = true
+_G.pets = true
 
 -----------------------------------------------
 
@@ -79,6 +80,25 @@ function showDetails()
     end
     print("Детали карты восстановлены.")
 end
+
+function hidePets()
+    for _, obj in ipairs(petsFolder:GetChildren()) do obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+    end
+    print("Питомцы скрыты.")
+end
+
+function showPets()
+    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(storage:GetChildren()) do
+        if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
+            obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets
+        end
+    end
+    print("Питомцы восстановлены.")
+end
+
+
 -----------------------------------------------
 
 -----------------------------------------------
@@ -137,11 +157,16 @@ Tab:AddButton({
 
 -----------------------------------------------
 
-Tab2:AddButton({
+Tab2:AddToggle({
     Name = "Show Pets",
     Default = false,
     Callback = function(Value)
-        showpets()
+        _G.pets = Value
+        if _G.pets == true then
+            hidePets()
+        else
+            showPets()
+        end
     end
 })
 
