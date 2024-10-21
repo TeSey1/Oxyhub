@@ -6,9 +6,9 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
-_G.unrenderDetails = true
-_G.UnrenderPets = true
-_G.UnrenderWater = true
+_G.Details = true
+_G.Pets = true
+_G.Water = true
 
 -----------------------------------------------
 
@@ -207,8 +207,8 @@ Tab2:AddToggle({
     Name = "Unrender Pets",
     Default = false,
     Callback = function(Value)
-        _G.UnrenderPets = Value
-        if _G.UnrenderPets == true then
+        _G.Pets = Value
+        if _G.Pets == true then
             hidePets()
         else
             showPets()
@@ -220,8 +220,8 @@ Tab2:AddToggle({
     Name = "Unrender Details",
     Default = false,
     Callback = function(Value)
-        _G.unrenderDetails = Value
-        if _G.unrenderDetails == true then
+        _G.Details = Value
+        if _G.Details == true then
             hideDetails()
         else
             showDetails()
@@ -233,8 +233,8 @@ Tab2:AddToggle({
     Name = "Unrender Water",
     Default = false,
     Callback = function(Value)
-        _G.UnrenderWater = Value
-        if _G.UnrenderWater == true then
+        _G.Water = Value
+        if _G.Water == true then
             hideWater()
         else
             showWater()
