@@ -74,14 +74,14 @@ function hidePets()
     local storage = game.ReplicatedStorage:FindFirstChild("Pets")  -- Папка для хранения скрытых объектов
 
     -- Если папка для хранения не найдена, создаем её
-    if not storage then
-        storage = Instance.new("Folder")
+    if not storage then storage = Instance.new("Folder")
         storage.Name = "Pets"
         storage.Parent = game.ReplicatedStorage end
 
     -- Перемещаем объекты в папку хранения 
-    for _, obj in ipairs(petsFolder:GetChildren()) do 
-        obj.Parent = storage  -- Перемещаем объект в папку Pets в ReplicatedStorage
+    for _, obj in ipairs(petsFolder:GetChildren()) do -- Игнорируем объект Highlight 
+    if obj.Name ~= "Highlight" then obj.Parent = storage  -- Перемещаем объект в папку Pets в ReplicatedStorage
+        end
     end
     print("Питомцы скрыты.")
 end
@@ -92,7 +92,7 @@ function showPets()
 
     -- Восстанавливаем объекты из папки хранения 
     for _, obj in ipairs(storage:GetChildren()) do if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
-            obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets 
+            obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets
         end
     end
     print("Питомцы восстановлены.")
