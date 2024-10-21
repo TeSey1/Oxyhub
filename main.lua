@@ -8,7 +8,7 @@ _G.rolls = true
 _G.autoupgrades = true
 _G.Details = true
 _G.Pets = true
-_G.Water = true
+_G.World = true
 
 -----------------------------------------------
 
@@ -27,7 +27,6 @@ function autoupgrades()
 	wait(0.5)
         -- Функция для "прокачки" объекта
         local function upgradeObject(objectName)
-            print("Прокачано" .. objectName)
             game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Upgrades_Purchase"):InvokeServer(objectName)
             -- Здесь можно добавить логику для прокачки объекта
         end
@@ -65,7 +64,6 @@ function hideDetails()
     for _, obj in ipairs(detailsFolder:GetChildren()) do
         obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
     end
-    OrionLib:MakeNotification({Name = "Map details are hidden.", Time = 3})
 end
 
 function showDetails()
@@ -79,7 +77,6 @@ function showDetails()
     for _, obj in ipairs(storage:GetChildren()) do
         obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
     end
-    OrionLib:MakeNotification({Name = "Map details have been restored.", Time = 3})
 end
 
 
@@ -97,7 +94,6 @@ function hidePets()
             obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
         end
     end
-    OrionLib:MakeNotification({Name = "Pets are hidden.", Time = 3})
 end
     
 function showPets()
@@ -111,36 +107,33 @@ function showPets()
     for _, obj in ipairs(storage:GetChildren()) do
         obj.Parent = petsFolder -- Перемещаем объекты обратно в Pets
     end
-    OrionLib:MakeNotification({Name = "Pets have been restored.", Time = 3})
 end
 
-function hideWater()
-    local waterFolder = game.Workspace:WaitForChild("OUTER"):WaitForChild("Water") -- Папка с водой
-    local storage = game.ReplicatedStorage:FindFirstChild("Water") -- Папка для хранения скрытых объектов
+function hideWorld()
+    local waterFolder = game.Workspace:WaitForChild("OUTER") -- Папка с водой
+    local storage = game.ReplicatedStorage:FindFirstChild("World") -- Папка для хранения скрытых объектов
     if not storage then
         storage = Instance.new("Folder")
-        storage.Name = "Water"
+        storage.Name = "World"
         storage.Parent = game.ReplicatedStorage
     end
 
     for _, obj in ipairs(waterFolder:GetChildren()) do
         obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
     end
-    OrionLib:MakeNotification({Name = "Water are hidden.", Time = 3})
 end
 
-function showWater()
-    local waterFolder = game.Workspace:WaitForChild("OUTER"):WaitForChild("Water") -- Папка с водой 
-    local storage = game.ReplicatedStorage:FindFirstChild("Water") -- Папка для хранения скрытых объектов 
+function showWorld()
+    local waterFolder = game.Workspace:WaitForChild("OUTER") -- Папка с водой 
+    local storage = game.ReplicatedStorage:FindFirstChild("World") -- Папка для хранения скрытых объектов 
     if not storage then
         storage = Instance.new("Folder")
-        storage.Name = "Water"
+        storage.Name = "World"
         storage.Parent = game.ReplicatedStorage
     end
     for _, obj in ipairs(storage:GetChildren()) do
         obj.Parent = waterFolder -- Перемещаем объекты обратно в Water 
     end 
-    OrionLib:MakeNotification({Name = "Water have been restored.", Time = 3})
 end
 
 
@@ -230,14 +223,14 @@ Tab2:AddToggle({
 })
 
 Tab2:AddToggle({
-    Name = "Unrender Water",
+    Name = "Unrender World & Water",
     Default = false,
     Callback = function(Value)
-        _G.Water = Value
-        if _G.Water == true then
-            hideWater()
+        _G.World = Value
+        if _G.World == true then
+            hideWorld()
         else
-            showWater()
+            showWorld()
         end
     end
 })
