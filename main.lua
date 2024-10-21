@@ -51,23 +51,32 @@ function autoupgrades()
     end
 end
 
-function hideDetails()
+local function hideDetails()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
     for _, obj in ipairs(detailsFolder:GetChildren()) do
-        obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью (Part, MeshPart и т.д.)
+            obj.Transparency = 1  -- Делаем объект полностью прозрачным
+            obj.CanCollide = false  -- Отключаем столкновение
+            obj.Anchored = true  -- Фиксируем объект
+        end
     end
     print("Детали карты скрыты.")
 end
 
-function showDetails()
+-- Функция для восстановления объектов
+local function showDetails()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
+    for _, obj in ipairs(detailsFolder:GetChildren()) do
+        if obj:IsA("BasePart") then
+            obj.Transparency = 0  -- Возвращаем видимость объекта
+            obj.CanCollide = true  -- Включаем столкновение
+            obj.Anchored = false  -- Отключаем фиксацию, если она была отключена
+        end
     end
+    isHidden = false
     print("Детали карты восстановлены.")
 end
+
 
 function hidePets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
