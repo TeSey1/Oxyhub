@@ -240,7 +240,6 @@ function teleportToFruits()
                     if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
                         character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
                         print(1)
-                        return -- Выходим из функции после первого успешного телепорта
                 end
             end
         end
