@@ -102,12 +102,8 @@ function showPets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
     local storage = game.ReplicatedStorage -- Папка для хранения скрытых объектов
     for _, obj in ipairs(storage:GetChildren()) do
-        if obj:IsA("Model") then -- Проверяем, является ли объект моделью питомца 
-            obj.Parent = petsFolder -- Перемещаем объекты обратно в Pets
-            print(obj.Name .. " восстановлен в Pets.")
-        else
-            print(obj.Name .. " не является моделью питомца и не был восстановлен.")
-        end
+        obj.Parent = petsFolder -- Перемещаем объекты обратно в Pets
+        print(obj.Name .. " восстановлен в Pets.")
     end
     print("Все питомцы восстановлены.")
 end
