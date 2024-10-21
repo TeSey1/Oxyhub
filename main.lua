@@ -72,26 +72,47 @@ function hideDetails()
     print("Детали карты скрыты.")
 end
 
+function hideDetails()
+    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+    if not detailsFolder then
+        print("Папка DETAILS не найдена.")
+        return
+    end
+    
+    local storage = game.ReplicatedStorage:FindFirstChild("Details")  -- Папка для хранения скрытых объектов
+    if not storage then storage = Instance.new("Folder")
+        storage.Name = "Details"
+        storage.Parent = game.ReplicatedStorage end
+    
+    for _, obj in ipairs(detailsFolder:GetChildren()) do
+        obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+    end
+    print("Детали карты скрыты.")
+end
+
 function showDetails()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
+    if not detailsFolder then
+        print("Папка DETAILS не найдена.")
+        return
+    end
+    
+    local storage = game.ReplicatedStorage:WaitForChild("Details")  -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(storage:GetChildren()) do obj.Parent = detailsFolder  -- Перемещаем объекты обратно в DETAILS 
     end
     print("Детали карты восстановлены.")
 end
 
 function hidePets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
-    local storage = game.ReplicatedStorage:FindFirstChild("Pets")  -- Папка для хранения скрытых объектов -- Если папка для хранения не найдена, создаем ее
-    if not storage then
-        storage = Instance.new("Folder")
+    local storage = game.ReplicatedStorage:FindFirstChild("Pets")  -- Папка для хранения скрытых объектов
+    if not storage then storage = Instance.new("Folder")
         storage.Name = "Pets"
-        storage.Parent = game.ReplicatedStorage end
+        storage.Parent = game.ReplicatedStorage
+    end
 
     -- Перемещаем объекты в папку хранения 
-    for _, obj in ipairs(petsFolder:GetChildren()) do 
-        obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+    for _, obj in ipairs(petsFolder:GetChildren()) do obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
     end 
     print("Питомцы скрыты.")
 end
@@ -101,8 +122,7 @@ function showPets()
     local storage = game.ReplicatedStorage:WaitForChild("Pets")  -- Папка для хранения скрытых объектов
 
     -- Восстанавливаем объекты из папки хранения 
-    for _, obj in ipairs(storage:GetChildren()) do 
-        if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
+    for _, obj in ipairs(storage:GetChildren()) do if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
             obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets 
         end
     end 
