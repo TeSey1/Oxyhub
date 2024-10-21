@@ -51,29 +51,21 @@ function autoupgrades()
     end
 end
 
-local function hideDetails()
+function hideDetails()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
     for _, obj in ipairs(detailsFolder:GetChildren()) do
-        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью (Part, MeshPart и т.д.)
-            obj.Transparency = 1  -- Делаем объект полностью прозрачным
-            obj.CanCollide = false  -- Отключаем столкновение
-            obj.Anchored = true  -- Фиксируем объект
-        end
+        obj.Parent = obj.Parent + storage  -- Перемещаем объект в ReplicatedStorage
     end
     print("Детали карты скрыты.")
 end
 
--- Функция для восстановления объектов
-local function showDetails()
+function showDetails()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    for _, obj in ipairs(detailsFolder:GetChildren()) do
-        if obj:IsA("BasePart") then
-            obj.Transparency = 0  -- Возвращаем видимость объекта
-            obj.CanCollide = true  -- Включаем столкновение
-            obj.Anchored = false  -- Отключаем фиксацию, если она была отключена
-        end
+    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(storage:GetChildren()) do
+        obj.Parent = obj.Parent + detailsFolder  -- Перемещаем объекты обратно в Workspace
     end
-    isHidden = false
     print("Детали карты восстановлены.")
 end
 
@@ -82,7 +74,7 @@ function hidePets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
     local storage = game.ReplicatedStorage -- Папка для хранения скрытых объектов
     for _, obj in ipairs(petsFolder:GetChildren()) do 
-        obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
+        obj.Parent = obj.Parent + storage -- Перемещаем объект в ReplicatedStorage
     end
     print("Питомцы скрыты.")
 end
@@ -92,7 +84,7 @@ function showPets()
     local storage = game.ReplicatedStorage -- Папка для хранения скрытых объектов
     for _, obj in ipairs(storage:GetChildren()) do
         if obj:IsA("Model") and obj.Name:find("Pet") then -- Проверяем, является ли объект моделью питомца
-            obj.Parent = petsFolder -- Перемещаем объекты обратно в Pets
+            obj.Parent = obj.Parent + petsFolder -- Перемещаем объекты обратно в Pets
         end
     end
     print("Питомцы восстановлены.")
