@@ -140,20 +140,21 @@ end
 
 
 function hideBreakables()
-    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
-    local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Breakables"
-        storage.Parent = game.ReplicatedStorage 
-    end
+    while _G.Breakables == True do
+        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
+        local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
+        if not storage then
+            storage = Instance.new("Folder")
+            storage.Name = "Breakables"
+            storage.Parent = game.ReplicatedStorage 
+        end
 
-    for _, obj in ipairs(breakablesFolder:GetChildren()) do
-        if obj.Name ~= "Highlight" then 
-            obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+        for _, obj in ipairs(breakablesFolder:GetChildren()) do
+            if obj.Name ~= "Highlight" then 
+                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+            end
         end
     end
-    print("Все объекты в Breakables скрыты.")
 end
 
 function showBreakables()
