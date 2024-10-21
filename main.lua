@@ -6,8 +6,9 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
-_G.isHidden = true
-_G.pets = true
+_G.unrenderDetails = true
+_G.UnrenderPets = true
+_G.UnrenderWater = true
 
 -----------------------------------------------
 
@@ -19,6 +20,7 @@ function rolls()
         wait(1)  -- Пауза в 1 секунду между вызовами (можно изменить)
     end
 end
+
 
 function autoupgrades()
     while _G.autoupgrades == true do
@@ -50,6 +52,7 @@ function autoupgrades()
         processFolder(rootFolder)
     end
 end
+
 
 function hideDetails()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
@@ -108,6 +111,36 @@ function showPets()
     print("Все питомцы восстановлены.")
 end
 
+function hideWater()
+    local waterFolder = game.Workspace:WaitForChild("OUTER"):WaitForChild("Water") -- Папка с водой
+    local storage = game.ReplicatedStorage:FindFirstChild("Water") -- Папка для хранения скрытых объектов
+    if not storage then
+        storage = Instance.new("Folder")
+        storage.Name = "Water"
+        storage.Parent = game.ReplicatedStorage 
+    end
+
+    for _, obj in ipairs(waterFolder:GetChildren()) do 
+        obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
+        print(obj.Name .. " перемещен в ReplicatedStorage.")
+    end 
+    print("Все объекты в Water скрыты.")
+end
+
+function showWater()
+    local waterFolder = game.Workspace:WaitForChild("OUTER"):WaitForChild("Water") -- Папка с водой 
+    local storage = game.ReplicatedStorage:FindFirstChild("Water") -- Папка для хранения скрытых объектов 
+    if not storage then
+        storage = Instance.new("Folder")
+        storage.Name = "Water"
+        storage.Parent = game.ReplicatedStorage 
+    end
+    for _, obj in ipairs(storage:GetChildren()) do
+        obj.Parent = waterFolder -- Перемещаем объекты обратно в Water 
+        print(obj.Name .. " восстановлен в Water.")
+    end 
+    print("Все объекты в Water восстановлены.")
+end
 
 
 
@@ -170,11 +203,11 @@ Tab:AddButton({
 -----------------------------------------------
 
 Tab2:AddToggle({
-    Name = "Show Pets",
+    Name = "Unrender Pets",
     Default = false,
     Callback = function(Value)
-        _G.pets = Value
-        if _G.pets == true then
+        _G.UnrenderPets = Value
+        if _G.UnrenderPets == true then
             hidePets()
         else
             showPets()
@@ -183,11 +216,24 @@ Tab2:AddToggle({
 })
 
 Tab2:AddToggle({
-    Name = "Details",
+    Name = "Unrender Details",
     Default = false,
     Callback = function(Value)
-        _G.isHidden = Value
-        if _G.isHidden == true then
+        _G.unrenderDetails = Value
+        if _G.unrenderDetails == true then
+            hideDetails()
+        else
+            showDetails()
+        end
+    end
+})
+
+Tab2:AddToggle({
+    Name = "Unrender Water",
+    Default = false,
+    Callback = function(Value)
+        _G.UnrenderWater = Value
+        if _G.UnrenderWater == true then
             hideDetails()
         else
             showDetails()
