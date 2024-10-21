@@ -9,6 +9,7 @@ _G.autoupgrades = true
 _G.Details = true
 _G.Pets = true
 _G.World = true
+_G.Breakables = true
 
 -----------------------------------------------
 
@@ -109,6 +110,7 @@ function showPets()
     end
 end
 
+
 function hideWorld()
     local waterFolder = game.Workspace:WaitForChild("OUTER") -- Папка с водой
     local storage = game.ReplicatedStorage:FindFirstChild("World") -- Папка для хранения скрытых объектов
@@ -137,6 +139,36 @@ function showWorld()
 end
 
 
+function hideBreakables()
+    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
+    local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
+    if not storage then
+        storage = Instance.new("Folder")
+        storage.Name = "Breakables"
+        storage.Parent = game.ReplicatedStorage 
+    end
+
+    for _, obj in ipairs(breakablesFolder:GetChildren()) do
+        if obj.Name ~= "Highlight" then 
+            obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+        end
+    end
+    print("Все объекты в Breakables скрыты.")
+end
+
+function showBreakables()
+    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
+    local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
+    if not storage then
+        storage = Instance.new("Folder")
+        storage.Name = "Breakables"
+        storage.Parent = game.ReplicatedStorage 
+    end
+
+    for _, obj in ipairs(storage:GetChildren()) do
+        obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
+    end
+end
 
 -----------------------------------------------
 
@@ -195,6 +227,19 @@ Tab:AddButton({
 })
 
 -----------------------------------------------
+
+Tab2:AddToggle({
+    Name = "Unrender Breakables",
+    Default = false,
+    Callback = function(Value)
+        _G.Breakables = Value
+        if _G.Breakables == true then
+            hideBreakables()
+        else
+            showBreakables()
+        end
+    end
+})
 
 Tab2:AddToggle({
     Name = "Unrender Pets",
