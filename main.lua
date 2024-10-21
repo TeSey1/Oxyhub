@@ -62,25 +62,23 @@ function showpets()
     end
 end
 
-function toggleDetails()
-    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS") -- Находим папку Details
-    if not detailsFolder then
-        print("Папка 'Details' не найдена в Workspace.")
-        return
-    end
-
+function hideDetails()
+    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
     for _, obj in ipairs(detailsFolder:GetChildren()) do
-        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью
-            if _G.isHidden then obj.Transparency = 0  -- Делаем объект видимым
-                obj.CanCollide = true  -- Включаем столкновение
-            else
-                obj.Transparency = 1  -- Делаем объект невидимым 
-                obj.CanCollide = false  -- Отключаем столкновение 
-            end
-        end
+        obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
     end
+    print("Детали карты скрыты.")
 end
 
+function showDetails()
+    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(storage:GetChildren()) do
+        obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
+    end
+    print("Детали карты восстановлены.")
+end
 -----------------------------------------------
 
 -----------------------------------------------
@@ -152,7 +150,11 @@ Tab2:AddToggle({
     Default = false,
     Callback = function(Value)
         _G.isHidden = Value
-        toggleDetails()
+        if _G.isHidden == true then
+            hideDetails()
+        else
+            showDetails()
+        end
     end
 })
 
