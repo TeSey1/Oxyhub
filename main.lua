@@ -229,7 +229,6 @@ function teleportToFruits()
                     local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
                     if basePart and basePart:IsA("BasePart") then -- Проверяем, является ли он частью 
                         character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-                        wait(0.5)
                         return -- Выходим из функции после первого успешного телепорта
                     end
                 end
@@ -246,7 +245,6 @@ function teleportToFruits()
         --         end
         --     end
         end
-        wait(1)
     end
 end
 
