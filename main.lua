@@ -92,8 +92,8 @@ function hidePets()
         storage.Parent = game.ReplicatedStorage
     end
 
-    for _, obj in ipairs(petsFolder:GetChildren()) do 
-        if obj.Name ~= "Highlight" then 
+    for _, obj in ipairs(petsFolder:GetChildren()) do
+        if obj.Name ~= "Highlight" then
             obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
         end
     end
@@ -120,12 +120,12 @@ function hideWater()
     if not storage then
         storage = Instance.new("Folder")
         storage.Name = "Water"
-        storage.Parent = game.ReplicatedStorage 
+        storage.Parent = game.ReplicatedStorage
     end
 
-    for _, obj in ipairs(waterFolder:GetChildren()) do 
+    for _, obj in ipairs(waterFolder:GetChildren()) do
         obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
-    end 
+    end
     OrionLib:MakeNotification({Name = "Water are hidden.", Time = 3})
 end
 
@@ -135,7 +135,7 @@ function showWater()
     if not storage then
         storage = Instance.new("Folder")
         storage.Name = "Water"
-        storage.Parent = game.ReplicatedStorage 
+        storage.Parent = game.ReplicatedStorage
     end
     for _, obj in ipairs(storage:GetChildren()) do
         obj.Parent = waterFolder -- Перемещаем объекты обратно в Water 
@@ -203,31 +203,31 @@ Tab:AddButton({
 
 -----------------------------------------------
 
-Tab2:AddToggle({
-    Name = "Unrender Pets",
-    Default = false,
-    Callback = function(Value)
-        _G.UnrenderPets = Value
-        if _G.UnrenderPets == true then
-            hidePets()
-        else
-            showPets()
-        end
-    end
-})
+-- Tab2:AddToggle({
+--     Name = "Unrender Pets",
+--     Default = false,
+--     Callback = function(Value)
+--         _G.UnrenderPets = Value
+--         if _G.UnrenderPets == true then
+--             hidePets()
+--         else
+--             showPets()
+--         end
+--     end
+-- })
 
-Tab2:AddToggle({
-    Name = "Unrender Details",
-    Default = false,
-    Callback = function(Value)
-        _G.unrenderDetails = Value
-        if _G.unrenderDetails == true then
-            hideDetails()
-        else
-            showDetails()
-        end
-    end
-})
+-- Tab2:AddToggle({
+--     Name = "Unrender Details",
+--     Default = false,
+--     Callback = function(Value)
+--         _G.unrenderDetails = Value
+--         if _G.unrenderDetails == true then
+--             hideDetails()
+--         else
+--             showDetails()
+--         end
+--     end
+-- })
 
 Tab2:AddToggle({
     Name = "Unrender Water",
