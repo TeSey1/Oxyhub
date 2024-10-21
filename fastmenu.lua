@@ -234,7 +234,9 @@ Tab2:AddToggle({
     Callback = function(Value)
         _G.Breakables = Value
         if _G.Breakables == true then
-            hideBreakables()
+            while _G.Breakables == true do
+                hideBreakables()
+            end
         else
             showBreakables()
         end
