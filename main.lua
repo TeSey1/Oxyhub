@@ -166,18 +166,18 @@ Tab2:AddToggle({
     end
 })
 
-Tab2:AddToggle({
-    Name = "Details",
-    Default = false,
-    Callback = function(Value)
-        _G.isHidden = Value
-        if _G.isHidden == true then
-            hideDetails()
-        else
-            showDetails()
-        end
-    end
-})
+-- Tab2:AddToggle({
+--     Name = "Details",
+--     Default = false,
+--     Callback = function(Value)
+--         _G.isHidden = Value
+--         if _G.isHidden == true then
+--             hideDetails()
+--         else
+--             showDetails()
+--         end
+--     end
+-- })
 
 -----------------------------------------------
 
