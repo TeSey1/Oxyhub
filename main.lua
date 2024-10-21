@@ -385,6 +385,7 @@ Tab5:AddToggle({
         _G.Fruits = Value
         while _G.Fruits == true do
             teleportToFruits()
+            wait(2)
         end
     end
 })
