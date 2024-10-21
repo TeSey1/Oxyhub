@@ -71,27 +71,27 @@ end
 
 function hidePets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
-    local storage = game.ReplicatedStorage -- Папка для хранения скрытых объектов
-
-    -- Перемещаем объекты в папку хранения 
     for _, obj in ipairs(petsFolder:GetChildren()) do
-        obj.Parent = storage  -- Перемещаем объект в папку Pets в ReplicatedStorage
+        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью (Part, MeshPart и т.д.)
+            obj.Transparency = 1  -- Делаем объект полностью прозрачным
+            obj.CanCollide = false  -- Отключаем столкновение
+            obj.Anchored = true  -- Фиксируем объект 
+        end
     end
     print("Питомцы скрыты.")
 end
 
 function showPets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
-    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-
-    -- Восстанавливаем объекты из папки хранения 
-    for _, obj in ipairs(storage:GetChildren()) do 
-        if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца 
-            obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets
+    for _, obj in ipairs(petsFolder:GetChildren()) do
+        if obj:IsA("BasePart") then obj.Transparency = 0  -- Возвращаем видимость объекта
+            obj.CanCollide = true  -- Включаем столкновение
+            obj.Anchored = false  -- Отключаем фиксацию
         end
     end
     print("Питомцы восстановлены.")
 end
+
 
 
 
