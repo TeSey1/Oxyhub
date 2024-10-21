@@ -154,8 +154,7 @@ function hideBreakables()
         for _, obj in ipairs(breakablesFolder:GetChildren()) do
             if obj:IsA("MeshPart") and obj.Name ~= "Highlight" then 
                 obj.Transparency = 1 -- Делаем объект невидимым
-                obj.CanCollide = false -- Отключаем коллизии 
-                obj.CanTouch = true -- Устанавливаем CanTouch в true, если это применимо 
+                obj.CanCollide = false -- Отключаем коллизии
             end
         end
         wait(1)
