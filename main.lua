@@ -137,6 +137,40 @@ function showWorld()
     end 
 end
 
+
+function hideBreakables()
+    while _G.Breakables == true do
+        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
+        local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
+        if not storage then
+            storage = Instance.new("Folder")
+            storage.Name = "Breakables"
+            storage.Parent = game.ReplicatedStorage 
+        end
+
+        for _, obj in ipairs(breakablesFolder:GetChildren()) do
+            if obj.Name ~= "Highlight" then 
+                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+            end
+        end
+        wait(1)
+    end
+end
+
+function showBreakables()
+    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
+    local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
+    if not storage then
+        storage = Instance.new("Folder")
+        storage.Name = "Breakables"
+        storage.Parent = game.ReplicatedStorage 
+    end
+
+    for _, obj in ipairs(storage:GetChildren()) do
+        obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
+    end
+end
+
 -----------------------------------------------
 
 -----------------------------------------------
