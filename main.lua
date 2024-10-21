@@ -80,7 +80,7 @@ function hidePets()
 
     -- Перемещаем объекты в папку хранения 
     for _, obj in ipairs(petsFolder:GetChildren()) do -- Игнорируем объект Highlight 
-    if obj.Name ~= "Highlight" then obj.Parent = storage  -- Перемещаем объект в папку Pets в ReplicatedStorage
+        if obj.Name ~= "Highlight" then obj.Parent = storage  -- Перемещаем объект в папку Pets в ReplicatedStorage
         end
     end
     print("Питомцы скрыты.")
