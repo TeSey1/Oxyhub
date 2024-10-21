@@ -228,7 +228,8 @@ function teleportToFruits()
                     -- Теперь проверяем, есть ли у клонированного объекта "base"
                     local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
                     if basePart and basePart:IsA("BasePart") then -- Проверяем, является ли он частью 
-                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        wait(0.5)
                         return -- Выходим из функции после первого успешного телепорта
                     end
                 end
@@ -238,12 +239,14 @@ function teleportToFruits()
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                     local basePart = obj.base -- Получаем объект "base"
                     if basePart:IsA("BasePart") then -- Проверяем, является ли он частью 
-                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        wait(0.5)
                         return -- Выходим из функции после первого успешного телепорта
                     end
                 end
             end
         end
+        wait(1)
     end
 end
 
