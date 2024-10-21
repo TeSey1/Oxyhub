@@ -233,7 +233,7 @@ function teleportToFruits()
                     end
                 end
             end
-        if _G.Breakables == false then
+        elseif _G.Breakables == false then
             for _, obj in ipairs(breakablesFolder:GetChildren()) do
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                     local basePart = obj.base -- Получаем объект "base"
