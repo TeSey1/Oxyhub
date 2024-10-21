@@ -152,9 +152,10 @@ function hideBreakables()
         end
 
         for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj.Name ~= "Highlight" then 
-                obj.CanTouch = true
-                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+            if obj:IsA("BasePart") and obj.Name ~= "Highlight" then 
+                obj.Transparency = 1 -- Делаем объект невидимым
+                obj.CanCollide = false -- Отключаем коллизии 
+                obj.CanTouch = true -- Устанавливаем CanTouch в true, если это применимо 
             end
         end
         wait(1)
