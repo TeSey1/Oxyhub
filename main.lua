@@ -70,27 +70,45 @@ function showDetails()
 end
 
 function hidePets()
-    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
-    for _, obj in ipairs(petsFolder:GetChildren()) do
-        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью (Part, MeshPart и т.д.)
+    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами 
+    local hasHidden = false  -- Флаг для отслеживания, были ли скрыты питомцы 
+    for _, obj in ipairs(petsFolder:GetChildren()) do if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью (Part, MeshPart и т.д.)
             obj.Transparency = 1  -- Делаем объект полностью прозрачным
             obj.CanCollide = false  -- Отключаем столкновение
             obj.Anchored = true  -- Фиксируем объект 
-        end
+            hasHidden = true  -- Устанавливаем флаг, что хотя бы один питомец был скрыт
+        else 
+            print(obj.Name .. " не является физической частью и не был скрыт.")
+        end end
+
+    if hasHidden then
+        print("Питомцы скрыты.")
+    else
+        print("Не найдено питомцев для скрытия.")
     end
-    print("Питомцы скрыты.")
 end
 
 function showPets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
+    local hasShown = false  -- Флаг для отслеживания, были ли восстановлены питомцы
+
     for _, obj in ipairs(petsFolder:GetChildren()) do
-        if obj:IsA("BasePart") then obj.Transparency = 0  -- Возвращаем видимость объекта
-            obj.CanCollide = true  -- Включаем столкновение
+        if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью
+            obj.Transparency = 0  -- Возвращаем видимость объекта
+            obj.CanCollide = true  -- Включаем столкновение 
             obj.Anchored = false  -- Отключаем фиксацию
-        end
+            hasShown = true  -- Устанавливаем флаг, что хотя бы один питомец был восстановлен 
+        else
+            print(obj.Name .. " не является физической частью и не был восстановлен.")
+        end end
+
+    if hasShown then
+        print("Питомцы восстановлены.")
+    else
+        print("Не найдено питомцев для восстановления.")
     end
-    print("Питомцы восстановлены.")
 end
+
 
 
 
