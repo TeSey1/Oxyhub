@@ -214,34 +214,21 @@ end
 function teleportToFruits()
     local player = game.Players.LocalPlayer -- Получаем игрока (если скрипт локальный)
     local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
-    local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в ReplicatedStorage
     local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в Workspace
 
-        -- if _G.Breakables == true then
-        --     -- Проходим по всем объектам в ReplicatedStorage.Breakables
-        --     for _, obj in ipairs(replicatedBreakablesFolder:GetChildren()) do
-        --         if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
-        --             -- Переносим объект в Workspace
-        --             obj.Parent = breakablesFolder -- Переносим в нужную папку
-
-        --             -- Теперь проверяем, есть ли у клонированного объекта "base"
-        --             local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
-        --             if basePart and basePart:IsA("BasePart") then -- Проверяем, является ли он частью 
-        --                 character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-        --             end
-        --         end
-        --     end
-        -- else
-        for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
-                local basePart = obj.base -- Получаем объект "base"
-                if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
-                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"        
-                    return
-            end
+    for _, obj in ipairs(breakablesFolder:GetChildren()) do
+        if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
+            local basePart = obj.base -- Получаем объект "base"
+            if basePart:IsA("BasePart") then -- Проверяем, является ли он частью BasePart
+                -- Телепортируем персонажа к объекту "base"
+                character:SetPrimaryPartCFrame(basePart.CFrame) 
+                return -- Завершаем функцию после телепортации end
         end
     end
 end
+
+teleportToFruits() -- Вызываем функцию
+
 
 -----------------------------------------------
 
