@@ -234,9 +234,9 @@ Tab2:AddToggle({
     Callback = function(Value)
         _G.UnrenderWater = Value
         if _G.UnrenderWater == true then
-            hideDetails()
+            hideWater()
         else
-            showDetails()
+            showWater()
         end
     end
 })
