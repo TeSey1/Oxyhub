@@ -149,9 +149,15 @@ Tab2:AddToggle({
         local detailsFolder = game.Workspace.Details  -- Папка с деталями карты
         local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
         if details == true then
-            hideDetails()
+            for _, obj in ipairs(detailsFolder:GetChildren()) do
+                obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+            end
+            print("Детали карты скрыты.")
         else
-            showDetails()
+            for _, obj in ipairs(storage:GetChildren()) do
+                obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
+            end
+            print("Детали карты восстановлены.")
         end
     end
 })
