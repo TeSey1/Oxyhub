@@ -229,15 +229,17 @@ function teleportToFruits()
                     local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
                     if basePart and basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
                         character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        print("yep")
                     end
                 end
             end
-        else
+        if _G.Breakables == false then
             for _, obj in ipairs(breakablesFolder:GetChildren()) do
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                     local basePart = obj.base -- Получаем объект "base"
                     if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
                         character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"        
+                        print("no")
                     end
                 end
             end
