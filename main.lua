@@ -222,12 +222,11 @@ function teleportToFruits()
             if basePart:IsA("BasePart") then -- Проверяем, является ли он частью BasePart
                 -- Телепортируем персонажа к объекту "base"
                 character:SetPrimaryPartCFrame(basePart.CFrame) 
-                return -- Завершаем функцию после телепортации end
+                return -- Завершаем функцию после телепортации
+            end
         end
     end
 end
-
-teleportToFruits() -- Вызываем функцию
 
 
 -----------------------------------------------
