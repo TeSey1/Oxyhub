@@ -151,9 +151,10 @@ function hideBreakables()
             storage.Parent = game.ReplicatedStorage
         end
 
-        for _, obj in ipairs(breakablesFolder:GetDescendants()) do
-            if obj:IsA("MeshPart") then -- Проверяем, является ли объект частью
-                obj.Transparency = _G.Breakables and 1 or 0 -- Меняем Transparency
+        for _, obj in ipairs(breakablesFolder:GetChildren()) do
+            if obj.IsA("Meshpart") and obj.Name ~= "Highlight" then 
+                obj.Transparency = 1
+                --obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
             end
         end
         wait(1)
