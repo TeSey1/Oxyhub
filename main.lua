@@ -10,6 +10,7 @@ _G.Pets = true
 _G.World = true
 _G.Breakables = true
 _G.Orbs = true
+_G.Fruits = true
 
 -----------------------------------------------
 
@@ -209,6 +210,42 @@ function showOrbs()
     end
 end
 
+function teleportToFruits()
+    while _G.Fruits == true do
+        local player = game.Players.LocalPlayer -- Получаем игрока (если скрипт локальный)
+        local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
+        local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в ReplicatedStorage
+        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в Workspace
+
+        if _G.Breakables == false then
+            -- Проходим по всем объектам в ReplicatedStorage.Breakables
+            for _, obj in ipairs(replicatedBreakablesFolder:GetChildren()) do
+                if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
+                    -- Переносим объект в Workspace
+                    obj.Parent = breakablesFolder -- Переносим в нужную папку
+
+                    -- Теперь проверяем, есть ли у клонированного объекта "base"
+                    local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
+                    if basePart and basePart:IsA("BasePart") then -- Проверяем, является ли он частью 
+                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        return -- Выходим из функции после первого успешного телепорта
+                    end
+                end
+            end
+        else
+            for _, obj in ipairs(breakablesFolder:GetChildren()) do
+                if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
+                    local basePart = obj.base -- Получаем объект "base"
+                    if basePart:IsA("BasePart") then -- Проверяем, является ли он частью 
+                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        return -- Выходим из функции после первого успешного телепорта
+                    end
+                end
+            end
+        end
+    end
+end
+
 -----------------------------------------------
 
 -----------------------------------------------
@@ -343,6 +380,15 @@ Tab5:AddToggle({
         _G.autoupgrades = Value
         autoupgrades()
     end    
+})
+
+Tab5:AddToggle({
+    Name = "Auto Farm Fruits",
+    Default = false,
+    Callback = function(Value)
+        _G.Fruits = Value
+        teleportToFruits()
+    end
 })
 
 -----------------------------------------------
