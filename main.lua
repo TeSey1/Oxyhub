@@ -212,9 +212,8 @@ function showOrbs()
 end
 
 function teleportToFruits()
+    local player = game.Players.LocalPlayer -- Получаем игрока (если скрипт локальный)
     while _G.Fruits == true do
-        local player = game.Players.LocalPlayer -- Получаем игрока (если скрипт локальный)
-        local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
         local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в ReplicatedStorage
         local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в Workspace
 
@@ -228,8 +227,7 @@ function teleportToFruits()
         --             -- Теперь проверяем, есть ли у клонированного объекта "base"
         --             local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
         --             if basePart and basePart:IsA("BasePart") then -- Проверяем, является ли он частью 
-        --                 character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-        --                 return -- Выходим из функции после первого успешного телепорта
+        --                 player:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
         --             end
         --         end
         --     end
@@ -238,8 +236,8 @@ function teleportToFruits()
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                     local basePart = obj.base -- Получаем объект "base"
                     if basePart:IsA("MeshPart") then -- Проверяем, является ли он частью 
-                        character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-                        print(1)
+                        player:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                        
                 end
             end
         end
