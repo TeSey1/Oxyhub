@@ -147,7 +147,7 @@ Tab2:AddButton({
     end
 })
 
-Tab2:AddToggle({
+Tab2:AddButton({
     Name = "Details",
     Default = false,
     Callback = function(Value)
