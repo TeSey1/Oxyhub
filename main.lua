@@ -97,6 +97,7 @@ function hidePets()
                 obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
             end
         end
+        wait(1)
     end
 end
     
