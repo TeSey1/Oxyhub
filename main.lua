@@ -51,47 +51,42 @@ function autoupgrades()
     end
 end
 
--- function hideDetails()
---     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
---     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
---     for _, obj in ipairs(detailsFolder:GetChildren()) do
---         obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
---     end
---     print("Детали карты скрыты.")
--- end
+function hideDetails()
+    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(detailsFolder:GetChildren()) do
+        obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
+    end
+    print("Детали карты скрыты.")
+end
 
--- function showDetails()
---     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
---     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
---     for _, obj in ipairs(storage:GetChildren()) do
---         obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
---     end
---     print("Детали карты восстановлены.")
--- end
+function showDetails()
+    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
+    local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
+    for _, obj in ipairs(storage:GetChildren()) do
+        obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
+    end
+    print("Детали карты восстановлены.")
+end
 
 function hidePets()
-    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
+    local detailsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с деталями карты
     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-
-    -- Перемещаем объекты в папку хранения 
-    for _, obj in ipairs(petsFolder:GetChildren()) do -- Игнорируем объект Highlight 
-        obj.Parent = storage  -- Перемещаем объект в папку Pets в ReplicatedStorage
+    for _, obj in ipairs(detailsFolder:GetChildren()) do obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
     end
     print("Питомцы скрыты.")
 end
 
 function showPets()
-    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
+    local detailsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с деталями карты
     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
-
-    -- Восстанавливаем объекты из папки хранения 
-    for _, obj in ipairs(storage:GetChildren()) do if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
-            obj.Parent = petsFolder  -- Перемещаем объекты обратно в Pets
+    for _, obj in ipairs(storage:GetChildren()) do
+        if obj:IsA("Model") and obj.Name:find("Pet") then  -- Проверяем, является ли объект моделью питомца
+            obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Pets
         end
     end
     print("Питомцы восстановлены.")
 end
-
 
 
 -----------------------------------------------
@@ -165,18 +160,18 @@ Tab2:AddToggle({
     end
 })
 
--- Tab2:AddToggle({
---     Name = "Details",
---     Default = false,
---     Callback = function(Value)
---         _G.isHidden = Value
---         if _G.isHidden == true then
---             hideDetails()
---         else
---             showDetails()
---         end
---     end
--- })
+Tab2:AddToggle({
+    Name = "Details",
+    Default = false,
+    Callback = function(Value)
+        _G.isHidden = Value
+        if _G.isHidden == true then
+            hideDetails()
+        else
+            showDetails()
+        end
+    end
+})
 
 -----------------------------------------------
 
