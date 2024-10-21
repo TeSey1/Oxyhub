@@ -72,11 +72,6 @@ end
 function hidePets()
     local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets")  -- Папка с питомцами
     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов -- Если папка для хранения не найдена, создаем ее
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Pets"
-        storage.Parent = game.ReplicatedStorage end
-
     -- Перемещаем объекты в папку хранения 
     for _, obj in ipairs(petsFolder:GetChildren()) do obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
     end print("Питомцы скрыты.")
