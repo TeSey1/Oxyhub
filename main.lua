@@ -9,6 +9,7 @@ _G.autoupgrades = true
 _G.Pets = true
 _G.World = true
 _G.Breakables = true
+_G.Orbs = true
 
 -----------------------------------------------
 
@@ -81,17 +82,19 @@ end
 
 
 function hidePets()
-    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
-    local storage = game.ReplicatedStorage:FindFirstChild("Pets") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Pets"
-        storage.Parent = game.ReplicatedStorage
-    end
+    while _G.Pets == true do
+        local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
+        local storage = game.ReplicatedStorage:FindFirstChild("Pets") -- Папка для хранения скрытых объектов
+        if not storage then
+            storage = Instance.new("Folder")
+            storage.Name = "Pets"
+            storage.Parent = game.ReplicatedStorage
+        end
 
-    for _, obj in ipairs(petsFolder:GetChildren()) do
-        if obj.Name ~= "Highlight" then
-            obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
+        for _, obj in ipairs(petsFolder:GetChildren()) do
+            if obj.Name ~= "Highlight" then
+                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
+            end
         end
     end
 end
@@ -171,6 +174,40 @@ function showBreakables()
     end
 end
 
+
+function hideOrbs()
+    while _G.Orbs == true do
+        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Orbs") -- Папка с ломаемыми объектами
+        local storage = game.ReplicatedStorage:FindFirstChild("Orbs") -- Папка для хранения скрытых объектов
+        if not storage then
+            storage = Instance.new("Folder")
+            storage.Name = "Orbs"
+            storage.Parent = game.ReplicatedStorage 
+        end
+
+        for _, obj in ipairs(breakablesFolder:GetChildren()) do
+            if obj.Name ~= "Highlight" then 
+                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
+            end
+        end
+        wait(1)
+    end
+end
+
+function showOrbs()
+    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Orbs") -- Папка с ломаемыми объектами
+    local storage = game.ReplicatedStorage:FindFirstChild("Orbs") -- Папка для хранения скрытых объектов
+    if not storage then
+        storage = Instance.new("Folder")
+        storage.Name = "Orbs"
+        storage.Parent = game.ReplicatedStorage 
+    end
+
+    for _, obj in ipairs(storage:GetChildren()) do
+        obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
+    end
+end
+
 -----------------------------------------------
 
 -----------------------------------------------
@@ -228,6 +265,19 @@ Tab:AddButton({
 })
 
 -----------------------------------------------
+
+Tab2:AddToggle({
+    Name = "Unrender Orbs",
+    Default = false,
+    Callback = function(Value)
+        _G.Orbs = Value
+        if _G.Orbs == true then
+            hideOrbs()
+        else
+            showOrbs()
+        end
+    end
+})
 
 Tab2:AddToggle({
     Name = "Unrender Breakables",
