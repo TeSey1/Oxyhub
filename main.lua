@@ -6,7 +6,7 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
-_G.details = true
+
 -----------------------------------------------
 
 -----------------------------------------------
@@ -124,37 +124,6 @@ Tab2:AddButton({
     Default = false,
     Callback = function(Value)
         showpets()
-    end
-})
-
-Tab2:AddToggle({
-    Name = "Details",
-    Default = false,
-    Callback = function(Value)
-        _G.details = Value
-        local detailsFolder = game.Workspace.Details  -- Папка, содержащая объекты, которые нужно скрывать
-        local isHidden = false  -- Флаг, который отслеживает, скрыты ли объекты
-        if details == true then
-            for _, obj in ipairs(detailsFolder:GetChildren()) do
-                if obj:IsA("BasePart") then  -- Проверяем, является ли объект физической частью (Part, MeshPart и т.д.)
-                    obj.Transparency = 1  -- Делаем объект полностью прозрачным
-                    obj.CanCollide = false  -- Отключаем столкновение
-                    obj.Anchored = true  -- Фиксируем объект
-                end
-            end
-            isHidden = true
-            print("Детали карты скрыты.")
-        else
-            for _, obj in ipairs(detailsFolder:GetChildren()) do
-                if obj:IsA("BasePart") then
-                    obj.Transparency = 0  -- Возвращаем видимость объекта
-                    obj.CanCollide = true  -- Включаем столкновение
-                    obj.Anchored = false  -- Отключаем фиксацию, если она была отключена
-                end
-            end
-            isHidden = false
-            print("Детали карты восстановлены.")
-        end
     end
 })
 
