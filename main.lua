@@ -203,31 +203,31 @@ Tab:AddButton({
 
 -----------------------------------------------
 
--- Tab2:AddToggle({
---     Name = "Unrender Pets",
---     Default = false,
---     Callback = function(Value)
---         _G.UnrenderPets = Value
---         if _G.UnrenderPets == true then
---             hidePets()
---         else
---             showPets()
---         end
---     end
--- })
-
 Tab2:AddToggle({
-    Name = "Unrender Details",
+    Name = "Unrender Pets",
     Default = false,
     Callback = function(Value)
-        _G.unrenderDetails = Value
-        if _G.unrenderDetails == true then
-            hideDetails()
+        _G.UnrenderPets = Value
+        if _G.UnrenderPets == true then
+            hidePets()
         else
-            showDetails()
+            showPets()
         end
     end
 })
+
+-- Tab2:AddToggle({
+--     Name = "Unrender Details",
+--     Default = false,
+--     Callback = function(Value)
+--         _G.unrenderDetails = Value
+--         if _G.unrenderDetails == true then
+--             hideDetails()
+--         else
+--             showDetails()
+--         end
+--     end
+-- })
 
 Tab2:AddToggle({
     Name = "Unrender Water",
