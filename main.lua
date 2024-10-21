@@ -218,7 +218,7 @@ function teleportToFruits()
         local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в ReplicatedStorage
         local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в Workspace
 
-        if _G.Breakables == false then
+        if _G.Breakables == true then
             -- Проходим по всем объектам в ReplicatedStorage.Breakables
             for _, obj in ipairs(replicatedBreakablesFolder:GetChildren()) do
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
