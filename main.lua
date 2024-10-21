@@ -6,7 +6,6 @@ local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremiu
 
 _G.rolls = true
 _G.autoupgrades = true
-_G.Details = true
 _G.Pets = true
 _G.World = true
 _G.Breakables = true
@@ -138,39 +137,6 @@ function showWorld()
     end 
 end
 
-
-function hideBreakables()
-    while _G.Breakables == True do
-        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
-        local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
-        if not storage then
-            storage = Instance.new("Folder")
-            storage.Name = "Breakables"
-            storage.Parent = game.ReplicatedStorage 
-        end
-
-        for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj.Name ~= "Highlight" then 
-                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
-            end
-        end
-    end
-end
-
-function showBreakables()
-    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
-    local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Breakables"
-        storage.Parent = game.ReplicatedStorage 
-    end
-
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
-    end
-end
-
 -----------------------------------------------
 
 -----------------------------------------------
@@ -256,27 +222,16 @@ Tab2:AddToggle({
 })
 
 Tab2:AddToggle({
-    Name = "Unrender Details",
-    Default = false,
-    Callback = function(Value)
-        _G.Details = Value
-        if _G.Details == true then
-            hideDetails()
-        else
-            showDetails()
-        end
-    end
-})
-
-Tab2:AddToggle({
     Name = "Unrender World & Water",
     Default = false,
     Callback = function(Value)
         _G.World = Value
         if _G.World == true then
             hideWorld()
+            hideDetails()
         else
             showWorld()
+            showDetails()
         end
     end
 })
