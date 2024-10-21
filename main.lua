@@ -51,18 +51,6 @@ function autoupgrades()
     end
 end
 
-function showpets()
-    local args = {
-        [1] = "ShowOtherPets",
-        [2] = "PetSFX",
-        [3] = "PetAuras",
-        [4] = "FireworkShow"
-    }
-    for i = 1, #args do
-        game:GetService("ReplicatedStorage").Network:FindFirstChild("Toggle Setting"):InvokeServer(args[i])
-    end
-end
-
 function hideDetails()
     local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
