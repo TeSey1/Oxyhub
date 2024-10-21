@@ -65,14 +65,14 @@ function details()
     local detailsFolder = game.Workspace.Details  -- Папка с деталями карты
     local storage = game.ReplicatedStorage  -- Папка для хранения скрытых объектов
     if details == true then
-        local function hideDetails()
+        function hideDetails()
             for _, obj in ipairs(detailsFolder:GetChildren()) do
                 obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
             end
             print("Детали карты скрыты.")
         end
     else
-        local function showDetails()
+        function showDetails()
             for _, obj in ipairs(storage:GetChildren()) do
                 obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
             end
