@@ -216,18 +216,18 @@ Tab:AddButton({
 --     end
 -- })
 
--- Tab2:AddToggle({
---     Name = "Unrender Details",
---     Default = false,
---     Callback = function(Value)
---         _G.unrenderDetails = Value
---         if _G.unrenderDetails == true then
---             hideDetails()
---         else
---             showDetails()
---         end
---     end
--- })
+Tab2:AddToggle({
+    Name = "Unrender Details",
+    Default = false,
+    Callback = function(Value)
+        _G.unrenderDetails = Value
+        if _G.unrenderDetails == true then
+            hideDetails()
+        else
+            showDetails()
+        end
+    end
+})
 
 Tab2:AddToggle({
     Name = "Unrender Water",
