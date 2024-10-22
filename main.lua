@@ -1,8 +1,8 @@
-local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/OxyHub-Team/ui-library/refs/heads/main/orion.lua'))()
+getgenv().SecureMode = true
+local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/OxyHub-Team/ui-library/refs/heads/main/RayField.lua'))()
 getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/kocmoc/main/api.lua"))()
-local Window = OrionLib:MakeWindow({Name = "PETS GO ┃ OxyHub b0.1", HidePremium = false, SaveConfig = true, ConfigFolder = "OxyHub", IntroIcon = "rbxassetid://137607810655683", IntroText = "OxyHub", Icon = "rbxassetid://137607810655683"})
 
------------------------------------------------
+-------------------------------------
 
 _G.rolls = true
 _G.autoupgrades = true
@@ -12,9 +12,7 @@ _G.Breakables = true
 _G.Orbs = true
 _G.Fruits = true
 
------------------------------------------------
-
------------------------------------------------
+-------------------------------------
 
 function rolls()
     while _G.rolls == true do
@@ -242,67 +240,62 @@ function teleportToFruits()
     end
 end
 
------------------------------------------------
+-------------------------------------
 
------------------------------------------------
 
-local Tab = Window:MakeTab({
-    Name = "Home",
-    Icon = "rbxassetid://138276043416989",
-    PremiumOnly = false
-})
-local Tab2 = Window:MakeTab({
-    Name = "Optimization",
-    Icon = "rbxassetid://103268983581906",
-    PremiumOnly = false
-})
-local Tab3 = Window:MakeTab({
-    Name = "Rolls",
-    Icon = "rbxassetid://106353115333120",
-    PremiumOnly = false
-})
-local Tab4 = Window:MakeTab({
-    Name = "Breakbles",
-    Icon = "rbxassetid://135708807327995",
-    PremiumOnly = false
-})
-local Tab5 = Window:MakeTab({
-    Name = "Autos",
-    Icon = "rbxassetid://139399181305478",
-    PremiumOnly = false
-})
-local Tab6 = Window:MakeTab({
-    Name = "Profile",
-    Icon = "rbxassetid://117514197104865",
-    PremiumOnly = false
-})
-local Tab7 = Window:MakeTab({
-    Name = "Settings",
-    Icon = "rbxassetid://86008121828405",
-    PremiumOnly = false
-})
+local Window = Rayfield:CreateWindow({
+    Name = "PETS GO ┃ OxyHub b0.1",
+    LoadingTitle = "OxyHub is loading",
+    LoadingSubtitle = "by sexy boys",
+    ConfigurationSaving = {
+       Enabled = true,
+       FolderName = OxyHub,
+       FileName = "PETSGO"
+    },
+    Discord = {
+       Enabled = false,
+       Invite = "noinvitelink",
+       RememberJoins = true
+    },
+    KeySystem = false,
+    KeySettings = {
+       Title = "Untitled",
+       Subtitle = "Key System",
+       Note = "No method of obtaining the key is provided",
+       FileName = "Key",
+       SaveKey = true,
+       GrabKeyFromSite = false,
+       Key = {"Hello"}
+    }
+ })
+-------------------------------------
 
------------------------------------------------
+ local Tab = Window:CreateTab("Home", 138276043416989)
+ local Tab2 = Window:CreateTab("Optimization", 103268983581906)
+ local Tab3 = Window:CreateTab("Rolls", 106353115333120)
+ local Tab4 = Window:CreateTab("Farming", 135708807327995)
+ local Tab5 = Window:CreateTab("Autos", 139399181305478)
+ local Tab6 = Window:CreateTab("Profile", 117514197104865)
+ local Tab7 = Window:CreateTab("Settings", 86008121828405)
 
------------------------------------------------
+-------------------------------------
 
-local Section = Tab:AddSection({
-    Name = "Information"
-})
+ local Section = Tab:CreateSection("Information:")
+ local Paragraph = Tab:CreateParagraph({Title = "Hello " .. api.nickname .. "!", Content = "\nScript version: b0.1\nLast Update: 10/19/2024\n"})
+ local Button = Tab:CreateButton({
+    Name = "Copy Discord Server Link",
+    Callback = function()
+        setclipboard("https://discord.gg/JRf8ynwAYC")
+    end,
+ })
 
-Tab:AddParagraph("Hello " .. api.nickname .. "!","\nScript version: b0.1\nLast Update: 10/19/2024\n")
-Tab:AddButton({
-	Name = "Copy Discord Server Link",
-	Callback = function()
-        setclipboard("https://discord.gg/gPt63592fA")
-  	end    
-})
+-------------------------------------
+local Paragraph = Tab2:CreateParagraph({Title = "ATTENTION!", Content = "\nSometimes after optimization functions, you will need to re-enter the game to enable them back.\n"})
 
------------------------------------------------
-
-Tab2:AddToggle({
+local Toggle = Tab2:CreateToggle({
     Name = "Unrender Orbs",
-    Default = false,
+    CurrentValue = false,
+    Flag = "Unrender Orbs",
     Callback = function(Value)
         _G.Orbs = Value
         if _G.Orbs == true then
@@ -310,12 +303,13 @@ Tab2:AddToggle({
         else
             showOrbs()
         end
-    end
-})
+    end,
+ })
 
-Tab2:AddToggle({
+local Toggle = Tab2:CreateToggle({
     Name = "Unrender Breakables",
-    Default = false,
+    CurrentValue = false,
+    Flag = "Unrender Breakables",
     Callback = function(Value)
         _G.Breakables = Value
         if _G.Breakables == true then
@@ -323,12 +317,13 @@ Tab2:AddToggle({
         else
             showBreakables()
         end
-    end
-})
+    end,
+ })
 
-Tab2:AddToggle({
+local Toggle = Tab2:CreateToggle({
     Name = "Unrender Pets",
-    Default = false,
+    CurrentValue = false,
+    Flag = "Unrender Pets",
     Callback = function(Value)
         _G.Pets = Value
         if _G.Pets == true then
@@ -336,12 +331,13 @@ Tab2:AddToggle({
         else
             showPets()
         end
-    end
-})
+    end,
+ })
 
-Tab2:AddToggle({
-    Name = "Unrender World & Water",
-    Default = false,
+local Toggle = Tab2:CreateToggle({
+    Name = "Unrender World/Water",
+    CurrentValue = false,
+    Flag = "Unrender World/Water",
     Callback = function(Value)
         _G.World = Value
         if _G.World == true then
@@ -351,40 +347,61 @@ Tab2:AddToggle({
             showWorld()
             showDetails()
         end
-    end
-})
+    end,
+ })
 
------------------------------------------------
+-------------------------------------
 
-Tab3:AddToggle({
+local Toggle = Tab3:CreateToggle({
     Name = "Auto Roll",
-    Default = false,
+    CurrentValue = false,
+    Flag = "Auto Roll",
     Callback = function(Value)
         _G.rolls = Value
         rolls()
-    end    
-})
+    end,
+ })
 
------------------------------------------------
+-------------------------------------
 
------------------------------------------------
-
-Tab5:AddToggle({
-    Name = "Auto Upgrades",
-    Default = false,
-    Callback = function(Value)
-        _G.autoupgrades = Value
-        autoupgrades()
-    end    
-})
-
-Tab5:AddToggle({
+local Toggle = Tab4:CreateToggle({
     Name = "Auto Farm Fruits",
-    Default = false,
+    CurrentValue = false,
+    Flag = "Auto Farm Fruits",
     Callback = function(Value)
         _G.Fruits = Value
         teleportToFruits()
-    end
-})
+    end,
+ })
 
------------------------------------------------
+-------------------------------------
+
+local Toggle = Tab5:CreateToggle({
+    Name = "Auto Upgrades",
+    CurrentValue = false,
+    Flag = "Auto Upgrades",
+    Callback = function(Value)
+        _G.autoupgrades = Value
+        autoupgrades()
+    end,
+ })
+
+-------------------------------------
+
+Rayfield:Notify({
+    Title = "OxyHub successfully loaded!",
+    Content = "PLEASE, if you find a bug or have a suggestion on what to add to the script, let us know on the discord server.",
+    Duration = 5,
+    Image = 137607810655683,
+    Actions = {
+       Ignore = {
+          Name = "Okay!",
+          Callback = function()
+          print("okay")
+       end
+    },
+ },
+ })
+
+ Rayfield:LoadConfiguration()
+-------------------------------------
