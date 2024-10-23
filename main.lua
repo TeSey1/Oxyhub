@@ -11,6 +11,7 @@ _G.World = true
 _G.Breakables = true
 _G.Orbs = true
 _G.Fruits = true
+_G.hiddenGifgts = true
 
 -------------------------------------
 
@@ -240,6 +241,23 @@ function teleportToFruits()
     end
 end
 
+function teleportToHiddenGifts()
+    while _G.hiddenGifgts == true do
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("HiddenGifts")
+        for _, obj in ipairs(breakablesFolder:GetChildren()) do if obj:IsA("Model") and obj.PrimaryPart then
+        local targetCFrame = obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0)
+                character:SetPrimaryPartCFrame(targetCFrame)
+                wait(1)
+                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                wait(2)
+            end
+        end
+    end
+end
+
 -------------------------------------
 
 
@@ -374,6 +392,15 @@ local Toggle = Tab4:CreateToggle({
     end,
  })
 
+local Toggle = Tab4:CreateToggle({
+    Name = "Auto Hidden Presents",
+    CurrentValue = false,
+    Flag = "Auto Hidden Presents",
+    Callback = function(Value)
+        _G.hiddenGifgts = Value
+        teleportToHiddenGifts()
+    end
+})
 -------------------------------------
 
 local Toggle = Tab5:CreateToggle({
