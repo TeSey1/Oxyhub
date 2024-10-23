@@ -12,6 +12,7 @@ _G.Breakables = true
 _G.Orbs = true
 _G.Fruits = true
 _G.hiddenGifgts = true
+_G.digs = true
 
 -------------------------------------
 
@@ -258,6 +259,24 @@ function teleportToHiddenGifts()
     end
 end
 
+function teleportToDigs()
+    while _G.digs == true do
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+
+        local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
+        if diggingObjects then
+            local objects = diggingObjects:GetChildren()
+            for _, obj in ipairs(objects) do 
+                if obj:IsA("BasePart") then
+                    character:SetPrimaryPartCFrame(obj.CFrame)
+                    wait(6.5)
+                end
+            end
+        end
+    end
+end
+
 -------------------------------------
 
 
@@ -401,6 +420,16 @@ local Toggle = Tab4:CreateToggle({
         teleportToHiddenGifts()
     end
 })
+
+local Toggle = Tab4:CreateToggle({
+    Name = "Auto Dig Pots",
+    CurrentValue = false,
+    Flag = "Auto Dig Pots",
+    Callback = function(Value)
+        _G.digs = Value
+        teleportToDigs()
+    end
+})
 -------------------------------------
 
 local Toggle = Tab5:CreateToggle({
@@ -432,3 +461,5 @@ Rayfield:Notify({
 
  Rayfield:LoadConfiguration()
 -------------------------------------
+
+
