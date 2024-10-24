@@ -243,7 +243,7 @@ function teleportToFruits()
 end
 
 function teleportToHiddenGifts()
-    while _G.hiddenGifgts == true do
+    while _G.hiddenGifts == true do
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
         local humanoid = character:WaitForChild("Humanoid")
@@ -461,5 +461,3 @@ Rayfield:Notify({
 
  Rayfield:LoadConfiguration()
 -------------------------------------
-
-
