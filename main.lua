@@ -228,13 +228,17 @@ function teleportToFruits()
                     -- Теперь проверяем, есть ли у клонированного объекта "base"
                     local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
                     character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
+                else
+                    wait(1)
                 end
             end
         elseif _G.Breakables == false then
             for _, obj in ipairs(breakablesFolder:GetChildren()) do
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                     local basePart = obj.base -- Получаем объект "base"
-                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"        
+                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"  
+                else
+                    wait(1)
                 end
             end
         end
@@ -261,6 +265,8 @@ function teleportToHiddenGifts()
                     end
                 end
             end
+        else
+            wait(1)
         end
     end
 end
@@ -278,6 +284,8 @@ function teleportToDigs()
                     wait(6.5)
                 end
             end
+        else
+            wait(1)  -- Можно добавить паузу, чтобы избежать излишней нагрузки на процессор
         end
     end
 end
