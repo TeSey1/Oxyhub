@@ -268,22 +268,24 @@ end
 function teleportToDigs()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
+
     while _G.digs do
         local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
 
         if diggingObjects then
-            for _, obj in ipairs(diggingObjects:GetChildren()) do 
+            local digItems = diggingObjects:GetChildren()
+            for _, obj in ipairs(digItems) do 
                 if obj:IsA("BasePart") then
                     character:SetPrimaryPartCFrame(obj.CFrame)
-                    wait(6.5)
-                else wait(0.5)
+                    wait(6.5)  -- Ждем перед телепортацией к следующему объекту
                 end
             end
         else
-            wait(1)  -- Можно добавить паузу, чтобы избежать излишней нагрузки на процессор
+            wait(1)  -- Ожидание, если Digging не найден
         end
     end
 end
+
 
 -------------------------------------
 
