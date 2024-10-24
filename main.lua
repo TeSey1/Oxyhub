@@ -243,31 +243,36 @@ function teleportToFruits()
 end
 
 function teleportToHiddenGifts()
-    while _G.hiddenGifts == true do
+    while _G.hiddenGifts do
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
         local humanoid = character:WaitForChild("Humanoid")
-        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("HiddenGifts")
-        for _, obj in ipairs(breakablesFolder:GetChildren()) do if obj:IsA("Model") and obj.PrimaryPart then
-        local targetCFrame = obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0)
-                character:SetPrimaryPartCFrame(targetCFrame)
-                wait(1)
-                humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                wait(2)
+        local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
+    
+        if breakablesFolder then
+            local hiddenGifts = breakablesFolder:FindFirstChild("HiddenGifts")
+            if hiddenGifts then
+                for _, obj in ipairs(hiddenGifts:GetChildren()) do
+                    if obj:IsA("Model") and obj.PrimaryPart then
+                        character:SetPrimaryPartCFrame(obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0))
+                        wait(1)
+                        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                        wait(2)
+                    end
+                end
             end
         end
     end
 end
 
 function teleportToDigs()
-    while _G.digs == true do
+    while _G.digs do
         local player = game.Players.LocalPlayer
         local character = player.Character or player.CharacterAdded:Wait()
-
         local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
+    
         if diggingObjects then
-            local objects = diggingObjects:GetChildren()
-            for _, obj in ipairs(objects) do 
+            for _, obj in ipairs(diggingObjects:GetChildren()) do 
                 if obj:IsA("BasePart") then
                     character:SetPrimaryPartCFrame(obj.CFrame)
                     wait(6.5)
