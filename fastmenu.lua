@@ -76,7 +76,7 @@ createButton("Console", UDim2.new(0, 0, 0, 40), "https://rawscripts.net/raw/Univ
 createButton("Spy", UDim2.new(0, 0, 0, 80), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
 createButton("Dex", UDim2.new(0, 0, 0, 120), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
 createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, 160), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
-createButton("Global OxyHub", UDim2.new(0, 0, 0, 200), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua") -- Добавлено место под пятую кнопку
+createButton("Global OxyHub", UDim2.new(0, 0, 0, 200), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua")
 
 -- Установка стилей кнопок
 for _, button in pairs(MainFrame:GetChildren()) do 
