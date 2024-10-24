@@ -227,12 +227,13 @@ function teleportToFruits()
                         obj.Parent = breakablesFolder
                         local basePart = obj:FindFirstChild("base")
                         character:SetPrimaryPartCFrame(basePart.CFrame)
+                        wait(1)
                     end
                 end
             else
                 for _, obj in ipairs(breakablesFolder:GetChildren()) do
-                    local basePart = obj:FindFirstChild("base")
-                    if basePart and character and character.PrimaryPart then
+                    if obj:FindFirstChild("base") then
+                        local basePart = obj:FindFirstChild("base")
                         character:SetPrimaryPartCFrame(basePart.CFrame)
                         wait(1)
                     end
