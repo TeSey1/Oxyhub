@@ -243,10 +243,10 @@ function teleportToFruits()
 end
 
 function teleportToHiddenGifts()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
     while _G.hiddenGifts do
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoid = character:WaitForChild("Humanoid")
         local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
     
         if breakablesFolder then
@@ -266,9 +266,9 @@ function teleportToHiddenGifts()
 end
 
 function teleportToDigs()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
     while _G.digs do
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
         local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
 
         if diggingObjects then
@@ -276,6 +276,7 @@ function teleportToDigs()
                 if obj:IsA("BasePart") then
                     character:SetPrimaryPartCFrame(obj.CFrame)
                     wait(6.5)
+                else wait(0.5)
                 end
             end
         else
