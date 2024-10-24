@@ -13,6 +13,7 @@ _G.Orbs = true
 _G.Fruits = true
 _G.hiddenGifts = true
 _G.digs = true
+local teleportLock = false
 
 -------------------------------------
 
@@ -212,37 +213,32 @@ function showOrbs()
 end
 
 function teleportToFruits()
-    local player = game.Players.LocalPlayer -- Получаем игрока (если скрипт локальный)
-    local character = player.Character or player.CharacterAdded:Wait() -- Получаем персонажа игрока
-    while _G.Fruits == true do
-        local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в ReplicatedStorage
-        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами в Workspace
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    while _G.Fruits do
+        if not teleportLock then
+            teleportLock = true -- Устанавливаем блокировку
+            local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables")
+            local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables")
 
-        if _G.Breakables == true then
-            -- Проходим по всем объектам в ReplicatedStorage.Breakables
-            for _, obj in ipairs(replicatedBreakablesFolder:GetChildren()) do
-                if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
-                    -- Переносим объект в Workspace
-                    obj.Parent = breakablesFolder -- Переносим в нужную папку
-
-                    -- Теперь проверяем, есть ли у клонированного объекта "base"
-                    local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
-                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-                end
-            end
-        elseif _G.Breakables == false then
-            for _, obj in ipairs(breakablesFolder:GetChildren()) do
-                if obj:FindFirstChild("base") then
-                    local basePart = obj:FindFirstChild("base") -- Проверяем, есть ли дочерний объект с именем "base"
-                
-                    if basePart then
-                        if character and character.PrimaryPart then -- Убедимся, что character и его PrimaryPart существуют
-                            character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-                            wait(1) -- Ждем перед следующей итерацией, чтобы избежать слишком быстрого перемещения
-                        end
+            if _G.Breakables then
+                for _, obj in ipairs(replicatedBreakablesFolder:GetChildren()) do
+                    if obj:FindFirstChild("base") then
+                        obj.Parent = breakablesFolder
+                        local basePart = obj:FindFirstChild("base")
+                        character:SetPrimaryPartCFrame(basePart.CFrame)
                     end
                 end
-            end            
+            else
+                for _, obj in ipairs(breakablesFolder:GetChildren()) do
+                    local basePart = obj:FindFirstChild("base")
+                    if basePart and character and character.PrimaryPart then
+                        character:SetPrimaryPartCFrame(basePart.CFrame)
+                        wait(1)
+                    end
+                end
+            end
+            teleportLock = false -- Сбрасываем блокировку
         end
         wait(2)
     end
@@ -253,21 +249,25 @@ function teleportToHiddenGifts()
     local character = player.Character or player.CharacterAdded:Wait()
     local humanoid = character:WaitForChild("Humanoid")
     while _G.hiddenGifts do
-        local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
-    
-        if breakablesFolder then
-            local hiddenGifts = breakablesFolder:FindFirstChild("HiddenGifts")
-            if hiddenGifts then
-                for _, obj in ipairs(hiddenGifts:GetChildren()) do
-                    if obj:IsA("Model") and obj.PrimaryPart then
-                        character:SetPrimaryPartCFrame(obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0))
-                        wait(1)
-                        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                        wait(2)
+        if not teleportLock then
+            teleportLock = true
+            local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
+            if breakablesFolder then
+                local hiddenGifts = breakablesFolder:FindFirstChild("HiddenGifts")
+                if hiddenGifts then
+                    for _, obj in ipairs(hiddenGifts:GetChildren()) do
+                        if obj:IsA("Model") and obj.PrimaryPart then
+                            character:SetPrimaryPartCFrame(obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0))
+                            wait(1)
+                            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+                            wait(2)
+                        end
                     end
                 end
             end
+            teleportLock = false
         end
+        wait(2)
     end
 end
 
@@ -275,25 +275,28 @@ function teleportToDigs()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
     while _G.digs do
-        local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
-        if diggingObjects then
-            local digItems = diggingObjects:GetChildren()
-            for _, obj in ipairs(digItems) do 
-                if obj:IsA("BasePart") then
-                    local success, err = pcall(function()
-                        character:SetPrimaryPartCFrame(obj.CFrame)
-                    end)
-                    if not success then
-                        warn("Ошибка при телепортации: " .. err)
+        if not teleportLock then
+            teleportLock = true
+            local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
+            if diggingObjects then
+                local digItems = diggingObjects:GetChildren()
+                for _, obj in ipairs(digItems) do 
+                    if obj:IsA("BasePart") then
+                        local success, err = pcall(function()
+                            character:SetPrimaryPartCFrame(obj.CFrame)
+                        end)
+                        if not success then
+                            warn("Ошибка при телепортации: " .. err)
+                        end
+                        wait(6.5)
                     end
-                    wait(6.5)
                 end
             end
+            teleportLock = false
         end
         wait(2)
     end
 end
-
 
 
 -------------------------------------
