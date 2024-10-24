@@ -272,22 +272,26 @@ end
 function teleportToDigs()
     local player = game.Players.LocalPlayer
     local character = player.Character or player.CharacterAdded:Wait()
-
     while _G.digs do
         local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
-
         if diggingObjects then
             local digItems = diggingObjects:GetChildren()
             for _, obj in ipairs(digItems) do 
                 if obj:IsA("BasePart") then
-                    character:SetPrimaryPartCFrame(obj.CFrame)
+                    local success, err = pcall(function()
+                        character:SetPrimaryPartCFrame(obj.CFrame)
+                    end)
+                    if not success then
+                        warn("Ошибка при телепортации: " .. err)
+                    end
                     wait(6.5)
                 end
             end
         end
-        wait(1)
+        wait(2)
     end
 end
+
 
 
 -------------------------------------
