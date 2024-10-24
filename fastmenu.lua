@@ -69,6 +69,7 @@ local function createButton(name, position, url)
 end
 
 -- Создание кнопок
+createButton("Console", UDim2.new(0, 0, 0, 40), "https://rawscripts.net/raw/Universal-Script-Mobile-Console-20913")
 createButton("Spy", UDim2.new(0, 0, 0, 40), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
 createButton("Dex", UDim2.new(0, 0, 0, 80), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
 createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, 120), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
