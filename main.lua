@@ -281,12 +281,11 @@ function teleportToDigs()
             for _, obj in ipairs(digItems) do 
                 if obj:IsA("BasePart") then
                     character:SetPrimaryPartCFrame(obj.CFrame)
-                    wait(6.5)  -- Ждем перед телепортацией к следующему объекту
+                    wait(6.5)
                 end
             end
-        else
-            wait(1)  -- Ожидание, если Digging не найден
         end
+        wait(1)
     end
 end
 
