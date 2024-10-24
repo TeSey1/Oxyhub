@@ -1,10 +1,6 @@
 local ScreenGui = Instance.new("ScreenGui")
 local MainFrame = Instance.new("Frame")
 local ToggleButton = Instance.new("TextButton")
-local SpyButton = Instance.new("TextButton")
-local DexButton = Instance.new("TextButton")
-local BetaOxyHubButton = Instance.new("TextButton")
-local GlobalOxyHubButton = Instance.new("TextButton")
 
 -- Настройки GUI
 ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
@@ -29,7 +25,8 @@ ToggleButton.Parent = MainFrame
 -- Функция для сворачивания/разворачивания
 local isOpen = true
 ToggleButton.MouseButton1Click:Connect(function()
-    isOpen = not isOpen MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 50, 0, 30)
+    isOpen = not isOpen
+    MainFrame.Size = isOpen and UDim2.new(0, 300, 0, 200) or UDim2.new(0, 50, 0, 30)
     ToggleButton.Text = isOpen and "🔼" or "🔽"
 end)
 
@@ -40,9 +37,11 @@ local dragStart
 local startPos
 
 MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 then dragging = true
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then 
+        dragging = true
         dragStart = input.Position
-        startPos = MainFrame.Position input.Changed:Connect(function()
+        startPos = MainFrame.Position 
+        input.Changed:Connect(function()
             if input.UserInputState == Enum.UserInputState.End then
                 dragging = false
             end
@@ -52,32 +51,40 @@ end)
 
 MainFrame.InputChanged:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseMovement and dragging then
-        local delta = input.Position - dragStart MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+        local delta = input.Position - dragStart 
+        MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
     end
 end)
 
 -- Настройка кнопок
 local function createButton(name, position, url)
     local button = Instance.new("TextButton")
-    button.Name = name button.Size = UDim2.new(1, 0, 0, 40)
-    button.Position = position button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+    button.Name = name 
+    button.Size = UDim2.new(1, 0, 0, 40)
+    button.Position = position 
+    button.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
     button.TextColor3 = Color3.fromRGB(255, 255, 255)
     button.Text = name
-    button.Parent = MainFrame button.MouseButton1Click:Connect(function()
+    button.Parent = MainFrame 
+    button.MouseButton1Click:Connect(function()
         loadstring(game:HttpGet(url))()
     end)
 end
 
 -- Создание кнопок
 createButton("Console", UDim2.new(0, 0, 0, 40), "https://rawscripts.net/raw/Universal-Script-Mobile-Console-20913")
-createButton("Spy", UDim2.new(0, 0, 0, 40), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
-createButton("Dex", UDim2.new(0, 0, 0, 80), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
-createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, 120), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
-createButton("Global OxyHub", UDim2.new(0, 0, 0, 160), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua")
+createButton("Spy", UDim2.new(0, 0, 0, 80), 'https://raw.githubusercontent.com/exxtremestuffs/SimpleSpySource/refs/heads/master/SimpleSpy.lua')
+createButton("Dex", UDim2.new(0, 0, 0, 120), "https://rawscripts.net/raw/Universal-Script-Keyless-mobile-dex-17888")
+createButton("Beta OxyHub (for tests)", UDim2.new(0, 0, 0, 160), "https://raw.githubusercontent.com/TeSey1/Oxyhub/refs/heads/main/main.lua")
+createButton("Global OxyHub", UDim2.new(0, 0, 0, 200), "https://raw.githubusercontent.com/OxyHub-Team/main/refs/heads/main/main.lua") -- Добавлено место под пятую кнопку
 
 -- Установка стилей кнопок
-for _, button in pairs(MainFrame:GetChildren()) do if button:IsA("TextButton") then button.Font = Enum.Font.SourceSans
-        button.TextSize = 18 button.BackgroundTransparency = 0.3 button.BorderSizePixel = 0
+for _, button in pairs(MainFrame:GetChildren()) do 
+    if button:IsA("TextButton") then 
+        button.Font = Enum.Font.SourceSans
+        button.TextSize = 18 
+        button.BackgroundTransparency = 0.3 
+        button.BorderSizePixel = 0
     end
 end
 
