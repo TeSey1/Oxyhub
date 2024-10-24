@@ -11,7 +11,7 @@ _G.World = true
 _G.Breakables = true
 _G.Orbs = true
 _G.Fruits = true
-_G.hiddenGifgts = true
+_G.hiddenGifts = true
 _G.digs = true
 
 -------------------------------------
@@ -247,45 +247,49 @@ function teleportToFruits()
 end
 
 function teleportToHiddenGifts()
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
+    local humanoid = character:WaitForChild("Humanoid")
+    local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
+
     while _G.hiddenGifts do
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local humanoid = character:WaitForChild("Humanoid")
-        local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
-    
         if breakablesFolder then
             local hiddenGifts = breakablesFolder:FindFirstChild("HiddenGifts")
             if hiddenGifts then
-                for _, obj in ipairs(hiddenGifts:GetChildren()) do
+                local gifts = hiddenGifts:GetChildren()
+                for _, obj in ipairs(gifts) do
                     if obj:IsA("Model") and obj.PrimaryPart then
                         character:SetPrimaryPartCFrame(obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0))
-                        wait(1)
+                        wait(1)  -- Ждем перед прыжком
                         humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                        wait(2)
+                        wait(2)  -- Ждем после прыжка
                     end
                 end
+            else
+                wait(1)  -- Ожидание, если HiddenGifts не найден
             end
         else
-            wait(1)
+            wait(1)  -- Ожидание, если __THINGS не найден
         end
     end
 end
 
 function teleportToDigs()
-    while _G.digs do
-        local player = game.Players.LocalPlayer
-        local character = player.Character or player.CharacterAdded:Wait()
-        local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
+    local player = game.Players.LocalPlayer
+    local character = player.Character or player.CharacterAdded:Wait()
     
+    while _G.digs do
+        local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
+
         if diggingObjects then
             for _, obj in ipairs(diggingObjects:GetChildren()) do 
                 if obj:IsA("BasePart") then
                     character:SetPrimaryPartCFrame(obj.CFrame)
-                    wait(6.5)
+                    wait(6.5)  -- Ждем перед телепортацией к следующему объекту
                 end
             end
         else
-            wait(1)  -- Можно добавить паузу, чтобы избежать излишней нагрузки на процессор
+            wait(1)  -- Ожидание, если Digging не найден
         end
     end
 end
@@ -429,7 +433,7 @@ local Toggle = Tab4:CreateToggle({
     CurrentValue = false,
     Flag = "Auto Hidden Presents",
     Callback = function(Value)
-        _G.hiddenGifgts = Value
+        _G.hiddenGifts = Value
         teleportToHiddenGifts()
     end
 })
