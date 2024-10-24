@@ -228,17 +228,13 @@ function teleportToFruits()
                     -- Теперь проверяем, есть ли у клонированного объекта "base"
                     local basePart = obj:FindFirstChild("base") -- Получаем объект "base"
                     character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"
-                else
-                    wait(1)
                 end
             end
         elseif _G.Breakables == false then
             for _, obj in ipairs(breakablesFolder:GetChildren()) do
                 if obj:FindFirstChild("base") then -- Проверяем, есть ли дочерний объект с именем "base"
                     local basePart = obj.base -- Получаем объект "base"
-                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"  
-                else
-                    wait(1)
+                    character:SetPrimaryPartCFrame(basePart.CFrame) -- Телепортируем персонажа к объекту "base"        
                 end
             end
         end
@@ -247,49 +243,43 @@ function teleportToFruits()
 end
 
 function teleportToHiddenGifts()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
-
     while _G.hiddenGifts do
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
+        local humanoid = character:WaitForChild("Humanoid")
+        local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
+    
         if breakablesFolder then
             local hiddenGifts = breakablesFolder:FindFirstChild("HiddenGifts")
             if hiddenGifts then
-                local gifts = hiddenGifts:GetChildren()
-                for _, obj in ipairs(gifts) do
+                for _, obj in ipairs(hiddenGifts:GetChildren()) do
                     if obj:IsA("Model") and obj.PrimaryPart then
                         character:SetPrimaryPartCFrame(obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0))
-                        wait(1)  -- Ждем перед прыжком
+                        wait(1)
                         humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                        wait(2)  -- Ждем после прыжка
+                        wait(2)
                     end
                 end
-            else
-                wait(1)  -- Ожидание, если HiddenGifts не найден
             end
-        else
-            wait(1)  -- Ожидание, если __THINGS не найден
         end
     end
 end
 
 function teleportToDigs()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    
     while _G.digs do
+        local player = game.Players.LocalPlayer
+        local character = player.Character or player.CharacterAdded:Wait()
         local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
 
         if diggingObjects then
             for _, obj in ipairs(diggingObjects:GetChildren()) do 
                 if obj:IsA("BasePart") then
                     character:SetPrimaryPartCFrame(obj.CFrame)
-                    wait(6.5)  -- Ждем перед телепортацией к следующему объекту
+                    wait(6.5)
                 end
             end
         else
-            wait(1)  -- Ожидание, если Digging не найден
+            wait(1)  -- Можно добавить паузу, чтобы избежать излишней нагрузки на процессор
         end
     end
 end
