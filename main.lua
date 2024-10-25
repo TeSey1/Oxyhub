@@ -1,316 +1,43 @@
-getgenv().SecureMode = true
-local Rayfield = loadstring(game:HttpGet('https://raw.githubusercontent.com/OxyHub-Team/ui-library/refs/heads/main/RayField.lua'))()
+local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
+
 getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/kocmoc/main/api.lua"))()
+local trueData = "496fd135863a486e88dddf0cece470bb"
+local falseData = "bbe44066cce342fa961cfed79773141d"
+local GameLoad = nil
+local PlaceId = nil
 
--------------------------------------
-
-_G.rolls = true
-_G.autoupgrades = true
-_G.Pets = true
-_G.World = true
-_G.Breakables = true
-_G.Orbs = true
-_G.Fruits = true
-_G.hiddenGifts = true
-_G.digs = true
-local teleportLock = false
-
--------------------------------------
-
-function rolls()
-    while _G.rolls == true do
-        game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Eggs_Roll"):InvokeServer()
-        wait(1)  -- Пауза в 1 секунду между вызовами (можно изменить)
+function StartScript()
+    OrionLib:Destroy()
+    wait(2)
+    if game.PlaceId == 18901165922 then
+        GameLoad = "P1"
+    end
+    local var,err = pcall(function ()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/JUSTaOxy/Scripts/blob/main/" .. GameLoad .. ".lua"))()
+    end)
+    if var == false  then
+        print("Error : " .. err)
     end
 end
 
+KeyGuardLibrary.Set({
+    publicToken = "b030632d85974e03bf9c53e4ff973c6f",
+    privateToken = "de882543421a41c5b333a184b61983be",
+    trueData = trueData,
+    falseData = falseData,
+})
 
-function autoupgrades()
-    while _G.autoupgrades == true do
-	wait(0.5)
-        -- Функция для "прокачки" объекта
-        local function upgradeObject(objectName)
-            game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Upgrades_Purchase"):InvokeServer(objectName)
-            -- Здесь можно добавить логику для прокачки объекта
-        end
-
-        -- Рекурсивная функция для обхода всех объектов, включая вложенные
-        local function processFolder(folder)
-            -- Перебираем все объекты в папке
-            for _, obj in ipairs(folder:GetChildren()) do
-                -- Вызываем функцию для текущего объекта
-                upgradeObject(obj.Name)
-
-                -- Если объект сам является контейнером для других объектов (например, это модель или папка),
-                -- вызываем эту же функцию рекурсивно для обработки вложенных объектов
-                if #obj:GetChildren() > 0 then
-                    processFolder(obj)  -- Рекурсивный вызов
-                end
-            end
-        end
-
-        -- Пример использования: передаем папку для обработки
-        local rootFolder = game:GetService("ReplicatedStorage").__DIRECTORY.Upgrades.Root  -- Замените на вашу папку
-        processFolder(rootFolder)
-    end
-end
-
-
-function hideDetails()
-    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage:FindFirstChild("Details")  -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Details"
-        storage.Parent = game.ReplicatedStorage
-    end
-    for _, obj in ipairs(detailsFolder:GetChildren()) do
-        obj.Parent = storage  -- Перемещаем объект в ReplicatedStorage
-    end
-end
-
-function showDetails()
-    local detailsFolder = game.Workspace:FindFirstChild("MAP"):FindFirstChild("PARTS"):FindFirstChild("DETAILS")  -- Папка с деталями карты
-    local storage = game.ReplicatedStorage:FindFirstChild("Details")  -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Details"
-        storage.Parent = game.ReplicatedStorage
-    end
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = detailsFolder  -- Перемещаем объекты обратно в Workspace
-    end
-end
-
-
-function hidePets()
-    while _G.Pets == true do
-        local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
-        local storage = game.ReplicatedStorage:FindFirstChild("Pets") -- Папка для хранения скрытых объектов
-        if not storage then
-            storage = Instance.new("Folder")
-            storage.Name = "Pets"
-            storage.Parent = game.ReplicatedStorage
-        end
-
-        for _, obj in ipairs(petsFolder:GetChildren()) do
-            if obj.Name ~= "Highlight" then
-                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
-            end
-        end
-        wait(1)
-    end
-end
-    
-function showPets()
-    local petsFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Pets") -- Папка с питомцами
-    local storage = game.ReplicatedStorage:FindFirstChild("Pets") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Pets"
-        storage.Parent = game.ReplicatedStorage
-    end
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = petsFolder -- Перемещаем объекты обратно в Pets
-    end
-end
-
-
-function hideWorld()
-    local waterFolder = game.Workspace:WaitForChild("OUTER") -- Папка с водой
-    local storage = game.ReplicatedStorage:FindFirstChild("World") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "World"
-        storage.Parent = game.ReplicatedStorage
-    end
-
-    for _, obj in ipairs(waterFolder:GetChildren()) do
-        obj.Parent = storage -- Перемещаем объект в ReplicatedStorage
-    end
-end
-
-function showWorld()
-    local waterFolder = game.Workspace:WaitForChild("OUTER") -- Папка с водой 
-    local storage = game.ReplicatedStorage:FindFirstChild("World") -- Папка для хранения скрытых объектов 
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "World"
-        storage.Parent = game.ReplicatedStorage
-    end
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = waterFolder -- Перемещаем объекты обратно в Water 
-    end 
-end
-
-
-function hideBreakables()
-    while _G.Breakables == true do
-        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
-        local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
-        if not storage then
-            storage = Instance.new("Folder")
-            storage.Name = "Breakables"
-            storage.Parent = game.ReplicatedStorage
-        end
-
-        for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj.Name ~= "Highlight" then
-                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
-            end
-        end
-        wait(1)
-    end
-end
-
-function showBreakables()
-    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables") -- Папка с ломаемыми объектами
-    local storage = game.ReplicatedStorage:FindFirstChild("Breakables") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Breakables"
-        storage.Parent = game.ReplicatedStorage 
-    end
-
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
-    end
-end
-
-
-
-function hideOrbs()
-    while _G.Orbs == true do
-        local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Orbs") -- Папка с ломаемыми объектами
-        local storage = game.ReplicatedStorage:FindFirstChild("Orbs") -- Папка для хранения скрытых объектов
-        if not storage then
-            storage = Instance.new("Folder")
-            storage.Name = "Orbs"
-            storage.Parent = game.ReplicatedStorage 
-        end
-
-        for _, obj in ipairs(breakablesFolder:GetChildren()) do
-            if obj.Name ~= "Highlight" then 
-                obj.Parent = storage -- Перемещаем объект в ReplicatedStorage 
-            end
-        end
-        wait(1)
-    end
-end
-
-function showOrbs()
-    local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Orbs") -- Папка с ломаемыми объектами
-    local storage = game.ReplicatedStorage:FindFirstChild("Orbs") -- Папка для хранения скрытых объектов
-    if not storage then
-        storage = Instance.new("Folder")
-        storage.Name = "Orbs"
-        storage.Parent = game.ReplicatedStorage 
-    end
-
-    for _, obj in ipairs(storage:GetChildren()) do
-        obj.Parent = breakablesFolder -- Перемещаем объекты обратно в Breakables
-    end
-end
-
-function teleportToFruits()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    while _G.Fruits do
-        if not teleportLock then
-            teleportLock = true -- Устанавливаем блокировку
-            local replicatedBreakablesFolder = game:GetService("ReplicatedStorage"):WaitForChild("Breakables")
-            local breakablesFolder = game.Workspace:WaitForChild("__THINGS"):WaitForChild("Breakables")
-
-            if _G.Breakables then
-                for _, obj in ipairs(replicatedBreakablesFolder:GetChildren()) do
-                    if obj:FindFirstChild("base") then
-                        obj.Parent = breakablesFolder
-                        local basePart = obj:FindFirstChild("base")
-                        character:SetPrimaryPartCFrame(basePart.CFrame)
-                        wait(1)
-                    end
-                end
-            else
-                for _, obj in ipairs(breakablesFolder:GetChildren()) do
-                    if obj:FindFirstChild("base") then
-                        local basePart = obj:FindFirstChild("base")
-                        character:SetPrimaryPartCFrame(basePart.CFrame)
-                        wait(1)
-                    end
-                end
-            end
-            teleportLock = false -- Сбрасываем блокировку
-        end
-        wait(2)
-    end
-end
-
-function teleportToHiddenGifts()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    local humanoid = character:WaitForChild("Humanoid")
-    while _G.hiddenGifts do
-        if not teleportLock then
-            teleportLock = true
-            local breakablesFolder = game.Workspace:FindFirstChild("__THINGS")
-            if breakablesFolder then
-                local hiddenGifts = breakablesFolder:FindFirstChild("HiddenGifts")
-                if hiddenGifts then
-                    for _, obj in ipairs(hiddenGifts:GetChildren()) do
-                        if obj:IsA("Model") and obj.PrimaryPart then
-                            character:SetPrimaryPartCFrame(obj.PrimaryPart.CFrame * CFrame.new(0, 5, 0))
-                            wait(1)
-                            humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-                            wait(2)
-                        end
-                    end
-                end
-            end
-            teleportLock = false
-        end
-        wait(2)
-    end
-end
-
-function teleportToDigs()
-    local player = game.Players.LocalPlayer
-    local character = player.Character or player.CharacterAdded:Wait()
-    while _G.digs do
-        if not teleportLock then
-            teleportLock = true
-            local diggingObjects = workspace.__THINGS:FindFirstChild("Digging")
-            if diggingObjects then
-                local digItems = diggingObjects:GetChildren()
-                for _, obj in ipairs(digItems) do 
-                    if obj:IsA("BasePart") then
-                        local success, err = pcall(function()
-                            character:SetPrimaryPartCFrame(obj.CFrame)
-                        end)
-                        if not success then
-                            warn("Ошибка при телепортации: " .. err)
-                        end
-                        wait(6.5)
-                    end
-                end
-            end
-            teleportLock = false
-        end
-        wait(2)
-    end
-end
-
-
--------------------------------------
-
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local key = ""
 
 local Window = Rayfield:CreateWindow({
-    Name = "PETS GO ┃ OxyHub b0.1",
-    LoadingTitle = "OxyHub is loading",
-    LoadingSubtitle = "by sexy boys",
+    Name = "OxyHub ┃ Key System",
+    LoadingTitle = "Key System is Loading, please Wait.",
+    LoadingSubtitle = "by OxyHub Development",
     ConfigurationSaving = {
        Enabled = true,
-       FolderName = OxyHub,
-       FileName = "PETSGO"
+       FolderName = OxyHubKey,
+       FileName = "OxyHubKey"
     },
     Discord = {
        Enabled = false,
@@ -327,160 +54,52 @@ local Window = Rayfield:CreateWindow({
        GrabKeyFromSite = false,
        Key = {"Hello"}
     }
- })
--------------------------------------
+})
 
- local Tab = Window:CreateTab("Home", 138276043416989)
- local Tab2 = Window:CreateTab("Optimization", 103268983581906)
- local Tab3 = Window:CreateTab("Rolls", 106353115333120)
- local Tab4 = Window:CreateTab("Farming", 135708807327995)
- local Tab5 = Window:CreateTab("Autos", 139399181305478)
- local Tab6 = Window:CreateTab("Profile", 117514197104865)
- local Tab7 = Window:CreateTab("Settings", 86008121828405)
+local Tab = Window:CreateTab("Key System", 102213054980369)
+local Tab2 = Window:CreateTab("Need Help?", 95650442256545)
 
--------------------------------------
+local Input = Tab:CreateInput({
+    Name = "Enter Key",
+    PlaceholderText = "Enter Key Here",
+    RemoveTextAfterFocusLost = false,
+    Callback = function(Value)
+        key = Value
+    end,
+})
 
- local Section = Tab:CreateSection("Information:")
- local Paragraph = Tab:CreateParagraph({Title = "Hello " .. api.nickname .. "!", Content = "\nScript version: b0.1\nLast Update: 10/19/2024\n"})
- local Button = Tab:CreateButton({
-    Name = "Copy Discord Server Link",
+local Button = Tab:CreateButton({
+    Name = "Check Key",
     Callback = function()
-        setclipboard("https://discord.gg/JRf8ynwAYC")
-    end,
- })
-
--------------------------------------
-local Paragraph = Tab2:CreateParagraph({Title = "ATTENTION!", Content = "\nSometimes after optimization functions, you will need to re-enter the game to enable them back.\n"})
-
-local Toggle = Tab2:CreateToggle({
-    Name = "Unrender Orbs",
-    CurrentValue = false,
-    Flag = "Unrender Orbs",
-    Callback = function(Value)
-        _G.Orbs = Value
-        if _G.Orbs == true then
-            hideOrbs()
+        local response = KeyGuardLibrary.validateDefaultKey(key) and KeyGuardLibrary.validatePremiumKey(key)
+        if response == trueData then
+            Rayfield:Notify({
+                Title = "Key is Valid!",
+                Content = "Wait for the script to load.",
+                Duration = 6.5,
+                Image = 137607810655683,
+             })
+            StartScript()
         else
-            showOrbs()
+            Rayfield:Notify({
+                Title = "Key is Invalid!",
+                Content = "Please try again",
+                Duration = 6.5,
+                Image = 137607810655683,
+             })
         end
     end,
- })
-
-local Toggle = Tab2:CreateToggle({
-    Name = "Unrender Breakables",
-    CurrentValue = false,
-    Flag = "Unrender Breakables",
-    Callback = function(Value)
-        _G.Breakables = Value
-        if _G.Breakables == true then
-            hideBreakables()
-        else
-            showBreakables()
-        end
-    end,
- })
-
-local Toggle = Tab2:CreateToggle({
-    Name = "Unrender Pets",
-    CurrentValue = false,
-    Flag = "Unrender Pets",
-    Callback = function(Value)
-        _G.Pets = Value
-        if _G.Pets == true then
-            hidePets()
-        else
-            showPets()
-        end
-    end,
- })
-
-local Toggle = Tab2:CreateToggle({
-    Name = "Unrender World/Water",
-    CurrentValue = false,
-    Flag = "Unrender World/Water",
-    Callback = function(Value)
-        _G.World = Value
-        if _G.World == true then
-            hideWorld()
-            hideDetails()
-        else
-            showWorld()
-            showDetails()
-        end
-    end,
- })
-
--------------------------------------
-
-local Toggle = Tab3:CreateToggle({
-    Name = "Auto Roll",
-    CurrentValue = false,
-    Flag = "Auto Roll",
-    Callback = function(Value)
-        _G.rolls = Value
-        rolls()
-    end,
- })
-
--------------------------------------
-
-local Toggle = Tab4:CreateToggle({
-    Name = "Auto Farm Fruits",
-    CurrentValue = false,
-    Flag = "Auto Farm Fruits",
-    Callback = function(Value)
-        _G.Fruits = Value
-        teleportToFruits()
-    end,
- })
-
-local Toggle = Tab4:CreateToggle({
-    Name = "Auto Hidden Presents",
-    CurrentValue = false,
-    Flag = "Auto Hidden Presents",
-    Callback = function(Value)
-        _G.hiddenGifts = Value
-        teleportToHiddenGifts()
-    end
 })
 
-local Toggle = Tab4:CreateToggle({
-    Name = "Auto Dig Pots",
-    CurrentValue = false,
-    Flag = "Auto Dig Pots",
-    Callback = function(Value)
-        _G.digs = Value
-        teleportToDigs()
-    end
-})
--------------------------------------
-
-local Toggle = Tab5:CreateToggle({
-    Name = "Auto Upgrades",
-    CurrentValue = false,
-    Flag = "Auto Upgrades",
-    Callback = function(Value)
-        _G.autoupgrades = Value
-        autoupgrades()
+local Button = Tab:CreateButton({
+    Name = "Get Key",
+    Callback = function()
+        setclipboard(KeyGuardLibrary.getLink())
+        Rayfield:Notify({
+            Title = "Link Copied!",
+            Content = "The link has been copied to your clipboard",
+            Duration = 6.5,
+            Image = 137607810655683,
+         })
     end,
- })
-
--------------------------------------
-
-Rayfield:Notify({
-    Title = "OxyHub successfully loaded!",
-    Content = "PLEASE, if you find a bug or have a suggestion on what to add to the script, let us know on the discord server.",
-    Duration = 5,
-    Image = 137607810655683,
-    Actions = {
-       Ignore = {
-          Name = "Okay!",
-          Callback = function()
-          print("okay")
-       end
-    },
- },
- })
-
- Rayfield:LoadConfiguration()
--------------------------------------
+})
