@@ -1,24 +1,11 @@
-local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
 
+local KeyGuardLibrary = loadstring(game:HttpGet("https://cdn.keyguardian.org/library/v1.0.0.lua"))()
 getgenv().api = loadstring(game:HttpGet("https://raw.githubusercontent.com/Boxking776/kocmoc/main/api.lua"))()
-local trueData = "496fd135863a486e88dddf0cece470bb"
-local falseData = "bbe44066cce342fa961cfed79773141d"
+local OrionLib = loadstring(game:HttpGet('https://raw.githubusercontent.com/shlexware/Orion/main/source'))()
+local trueData = "c39033ee5e85468ab0402b7d08deac1f"
+local falseData = "94ea3aaf5d674510b6d4681616d702de"
 local GameLoad = nil
 local PlaceId = nil
-
-function StartScript()
-    OrionLib:Destroy()
-    wait(2)
-    if game.PlaceId == 18901165922 then
-        GameLoad = "P1"
-    end
-    local var,err = pcall(function ()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/JUSTaOxy/Scripts/blob/main/" .. GameLoad .. ".lua"))()
-    end)
-    if var == false  then
-        print("Error : " .. err)
-    end
-end
 
 KeyGuardLibrary.Set({
     publicToken = "b030632d85974e03bf9c53e4ff973c6f",
@@ -27,79 +14,80 @@ KeyGuardLibrary.Set({
     falseData = falseData,
 })
 
-local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
 local key = ""
 
-local Window = Rayfield:CreateWindow({
-    Name = "OxyHub ┃ Key System",
-    LoadingTitle = "Key System is Loading, please Wait.",
-    LoadingSubtitle = "by OxyHub Development",
-    ConfigurationSaving = {
-       Enabled = true,
-       FolderName = OxyHubKey,
-       FileName = "OxyHubKey"
-    },
-    Discord = {
-       Enabled = false,
-       Invite = "noinvitelink",
-       RememberJoins = true
-    },
-    KeySystem = false,
-    KeySettings = {
-       Title = "Untitled",
-       Subtitle = "Key System",
-       Note = "No method of obtaining the key is provided",
-       FileName = "Key",
-       SaveKey = true,
-       GrabKeyFromSite = false,
-       Key = {"Hello"}
-    }
+function StartScript()
+    wait(8)
+    OrionLib:Destroy()
+    if game.PlaceId == 18901165922 then
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/JUSTaOxy/Scripts/refs/heads/main/P1.lua"))()
+    else
+        print("game not supported")
+    end
+end
+
+local Window = OrionLib:MakeWindow({Name = "OxyHub ┃ Key System", HidePremium = false, SaveConfig = true, ConfigFolder = "OxyHubKey", IntroEnabled = true, IntroText = "OxyHub is Loading", IntroIcon = "rbxassetid://137607810655683"})
+
+local Tab = Window:MakeTab({
+	Name = "Key System",
+	Icon = "rbxassetid://102213054980369",
+	PremiumOnly = false
+})
+local Tab2 = Window:MakeTab({
+	Name = "Need Help?",
+	Icon = "rbxassetid://95650442256545",
+	PremiumOnly = false
 })
 
-local Tab = Window:CreateTab("Key System", 102213054980369)
-local Tab2 = Window:CreateTab("Need Help?", 95650442256545)
-
-local Input = Tab:CreateInput({
-    Name = "Enter Key",
-    PlaceholderText = "Enter Key Here",
-    RemoveTextAfterFocusLost = false,
-    Callback = function(Value)
-        key = Value
-    end,
+Tab:AddTextbox({
+	Name = "Enter Key",
+	Default = "Enter Key Here",
+	TextDisappear = true,
+	Callback = function(Value)
+		key = Value
+	end	  
 })
 
-local Button = Tab:CreateButton({
-    Name = "Check Key",
-    Callback = function()
+Tab:AddButton({
+	Name = "Check Key",
+	Callback = function()
         local response = KeyGuardLibrary.validateDefaultKey(key) and KeyGuardLibrary.validatePremiumKey(key)
         if response == trueData then
-            Rayfield:Notify({
-                Title = "Key is Valid!",
+            OrionLib:MakeNotification({
+                Name = "Key is Valid",
                 Content = "Wait for the script to load.",
-                Duration = 6.5,
-                Image = 137607810655683,
-             })
+                Image = "rbxassetid://137607810655683",
+                Time = 5
+            })
             StartScript()
         else
-            Rayfield:Notify({
-                Title = "Key is Invalid!",
-                Content = "Please try again",
-                Duration = 6.5,
-                Image = 137607810655683,
-             })
+            OrionLib:MakeNotification({
+                Name = "Key is Invalid",
+                Content = "Please try again.",
+                Image = "rbxassetid://137607810655683",
+                Time = 5
+            })
         end
-    end,
+  	end    
 })
 
-local Button = Tab:CreateButton({
-    Name = "Get Key",
-    Callback = function()
+Tab:AddButton({
+	Name = "Get Key",
+	Callback = function()
         setclipboard(KeyGuardLibrary.getLink())
-        Rayfield:Notify({
-            Title = "Link Copied!",
-            Content = "The link has been copied to your clipboard",
-            Duration = 6.5,
-            Image = 137607810655683,
-         })
-    end,
+  	end    
+})
+
+Tab2:AddParagraph("Need Help?","Please create a ticket on the discord server and describe your problem.")
+Tab2:AddButton({
+	Name = "Copy Discord Server Link",
+	Callback = function()
+      setclipboard("https://discord.gg/BD3bc5MpNE")
+      OrionLib:MakeNotification({
+        Name = "The link has been copied!",
+        Content = "Please paste the link into your browser or discord.",
+        Image = "rbxassetid://137607810655683",
+        Time = 5
+    })
+  	end   
 })
